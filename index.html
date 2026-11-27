@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>HEY UNCLE! ✨ Birthday Celebration</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bangers&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script type="module" crossorigin src="./assets/index-C6KkFkGK.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BPWzbFs9.css">
+  </head>
+  <body class="relative min-h-[100dvh] w-full bg-[#12040b] text-white overflow-hidden flex items-center justify-center font-['Plus_Jakarta_Sans'] select-none">
+
+    <!-- Global Deep Berry, Dusty Rose & Champagne Pink Ambient Background -->
+    <div class="fixed inset-0 bg-[radial-gradient(circle_at_50%_35%,_rgba(244,114,182,0.18)_0%,_rgba(45,10,28,0.88)_55%,_#12040b_95%)] -z-30 pointer-events-none"></div>
+    <div class="fixed -top-36 -left-36 w-[520px] h-[520px] bg-pink-600/15 rounded-full blur-[140px] pointer-events-none -z-20"></div>
+    <div class="fixed -bottom-36 -right-36 w-[520px] h-[520px] bg-rose-500/15 rounded-full blur-[140px] pointer-events-none -z-20"></div>
+
+    <!-- Dynamic Diamond-Shaped Sparkles Layer -->
+    <div id="sparkle-field" class="fixed inset-0 pointer-events-none -z-10 overflow-hidden"></div>
+
+    <!-- Global Confetti Canvas (Shared across pages) -->
+    <canvas id="confetti-canvas" class="fixed inset-0 pointer-events-none z-50 w-full h-full"></canvas>
+
+    <!-- =================================================================
+         PAGE 1: WELCOME SCREEN (HEY UNCLE!)
+         ================================================================= -->
+    <section 
+      id="page-1" 
+      class="page-section relative z-10 w-[calc(100%-2rem)] max-w-md mx-auto px-6 py-8 sm:px-7 sm:py-9 rounded-[2.25rem] bg-gradient-to-b from-[#2b0b1d]/85 via-[#1c0612]/90 to-[#12040b]/95 backdrop-blur-2xl border border-pink-400/35 shadow-[0_0_80px_rgba(244,114,182,0.22)] flex flex-col items-center text-center transition-all duration-500 ease-out"
+    >
+      <div class="absolute top-4 left-4 w-5 h-5 border-t-2 border-l-2 border-amber-200/60 rounded-tl-lg"></div>
+      <div class="absolute top-4 right-4 w-5 h-5 border-t-2 border-r-2 border-amber-200/60 rounded-tr-lg"></div>
+      <div class="absolute bottom-4 left-4 w-5 h-5 border-b-2 border-l-2 border-amber-200/60 rounded-bl-lg"></div>
+      <div class="absolute bottom-4 right-4 w-5 h-5 border-b-2 border-r-2 border-amber-200/60 rounded-br-lg"></div>
+
+      <div class="relative mb-2">
+        <h1 class="text-5xl sm:text-7xl font-['Bangers'] tracking-wider uppercase text-transparent bg-clip-text bg-gradient-to-b from-white via-pink-200 to-rose-400 drop-shadow-[0_4px_20px_rgba(244,114,182,0.65)]">
+          HEY UNCLE!
+        </h1>
+      </div>
+
+      <!-- Upgraded Anime-Style Neon Line-Art VIP Portrait -->
+      <div class="relative w-44 h-44 sm:w-48 sm:h-48 my-3 flex items-center justify-center">
+        <div class="absolute w-40 h-40 sm:w-44 sm:h-44 rounded-full bg-gradient-to-tr from-pink-500/35 via-rose-400/25 to-amber-300/30 blur-2xl pointer-events-none"></div>
+
+        <div class="luffy-circle-img relative z-10 w-40 h-40 sm:w-44 sm:h-44 luffy-anim shadow-[0_14px_35px_rgba(0,0,0,0.9),0_0_30px_rgba(244,114,182,0.4)] border-2 border-pink-300/75 bg-gradient-to-b from-[#2a081c] via-[#16040e] to-[#0a0106] flex items-center justify-center overflow-hidden">
+          <svg viewBox="0 0 200 200" class="w-full h-full">
+            <defs>
+              <radialGradient id="animeBgAura" cx="50%" cy="48%" r="52%">
+                <stop offset="0%" stop-color="#f472b6" stop-opacity="0.45" />
+                <stop offset="55%" stop-color="#e11d48" stop-opacity="0.18" />
+                <stop offset="100%" stop-color="#0a0106" stop-opacity="0" />
+              </radialGradient>
+
+              <linearGradient id="neonRoseStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ffffff" />
+                <stop offset="45%" stop-color="#fbcfe8" />
+                <stop offset="100%" stop-color="#fb7185" />
+              </linearGradient>
+
+              <linearGradient id="goldAccentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#fffbeb" />
+                <stop offset="45%" stop-color="#fde68a" />
+                <stop offset="100%" stop-color="#f59e0b" />
+              </linearGradient>
+
+              <linearGradient id="shadesReflect" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#f472b6" stop-opacity="0.7" />
+                <stop offset="50%" stop-color="#be185d" stop-opacity="0.45" />
+                <stop offset="100%" stop-color="#1f0410" stop-opacity="0.9" />
+              </linearGradient>
+
+              <linearGradient id="jacketDarkGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#3b0a24" />
+                <stop offset="100%" stop-color="#12020a" />
+              </linearGradient>
+            </defs>
+
+            <circle cx="100" cy="100" r="92" fill="url(#animeBgAura)" />
+            <circle cx="100" cy="100" r="76" fill="none" stroke="url(#neonRoseStroke)" stroke-width="0.9" stroke-dasharray="6 4" opacity="0.4" />
+            <path d="M 38 72 A 68 68 0 0 1 162 72" fill="none" stroke="url(#goldAccentGrad)" stroke-width="1.2" stroke-linecap="round" opacity="0.5" />
+
+            <path d="M32 62 L35 69 L42 72 L35 75 L32 82 L29 75 L22 72 L29 69 Z" fill="#fde68a" class="avatar-star-pulse" />
+            <path d="M168 64 L170.5 69.5 L176 72 L170.5 74.5 L168 80 L165.5 74.5 L160 72 L165.5 69.5 Z" fill="#fbcfe8" class="avatar-star-pulse-delayed" />
+            <circle cx="42" cy="120" r="2" fill="#f9a8d4" opacity="0.75" />
+            <circle cx="158" cy="116" r="2.2" fill="#fde68a" opacity="0.8" />
+
+            <path d="M28 202 C32 152, 58 136, 100 136 C142 136, 168 152, 172 202 Z" fill="url(#jacketDarkGrad)" stroke="url(#neonRoseStroke)" stroke-width="2" />
+            <path d="M64 146 L56 122 L76 130 L88 158 Z" fill="#280618" stroke="url(#neonRoseStroke)" stroke-width="1.8" stroke-linejoin="round" />
+            <path d="M136 146 L144 122 L124 130 L112 158 Z" fill="#280618" stroke="url(#neonRoseStroke)" stroke-width="1.8" stroke-linejoin="round" />
+            
+            <path d="M82 140 L100 176 L118 140" fill="none" stroke="url(#goldAccentGrad)" stroke-width="1.6" opacity="0.85" />
+            <polygon points="100,158 105,166 100,174 95,166" fill="url(#goldAccentGrad)" />
+
+            <path d="M88 120 L88 142 L100 150 L112 142 L112 120 Z" fill="#210513" stroke="url(#neonRoseStroke)" stroke-width="1.6" />
+            <path d="M90 124 Q100 132 110 124" fill="none" stroke="#f472b6" stroke-width="1.2" opacity="0.5" />
+
+            <path d="M70 84 C70 104, 80 126, 100 128 C120 126, 130 104, 130 84 C130 64, 118 54, 100 54 C82 54, 70 64, 70 84 Z" fill="#260717" stroke="url(#neonRoseStroke)" stroke-width="2.2" />
+
+            <g>
+              <polygon points="71,84 96,86 94,99 74,97" fill="url(#shadesReflect)" stroke="url(#goldAccentGrad)" stroke-width="1.8" stroke-linejoin="round" />
+              <polygon points="104,86 129,84 126,97 106,99" fill="url(#shadesReflect)" stroke="url(#goldAccentGrad)" stroke-width="1.8" stroke-linejoin="round" />
+              <line x1="96" y1="87" x2="104" y2="87" stroke="url(#goldAccentGrad)" stroke-width="2" />
+              <line x1="76" y1="87" x2="82" y2="95" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" opacity="0.85" />
+              <line x1="109" y1="87" x2="115" y2="95" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" opacity="0.85" />
+            </g>
+
+            <path d="M100 96 L98 103 L101 104" fill="none" stroke="#fbcfe8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M92 113 Q101 117 109 111" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" />
+
+            <path d="M64 88 C58 70, 66 50, 80 44 L74 36 C88 36, 96 40, 102 34 L106 42 C118 36, 132 44, 138 56 L144 52 C142 66, 140 78, 135 88 C132 74, 124 64, 114 68 L118 58 C108 62, 102 68, 96 60 C90 66, 82 70, 78 62 C74 70, 68 78, 64 88 Z" fill="#18030e" stroke="url(#neonRoseStroke)" stroke-width="2" stroke-linejoin="round" />
+
+            <g class="avatar-crown-float">
+              <path d="M78 34 L84 14 L100 26 L116 14 L122 34 Z" fill="url(#goldAccentGrad)" stroke="#ffffff" stroke-width="1.5" stroke-linejoin="round" />
+              <circle cx="84" cy="10" r="2.5" fill="#ffffff" />
+              <circle cx="100" cy="7" r="3.4" fill="#fbcfe8" />
+              <circle cx="116" cy="10" r="2.5" fill="#ffffff" />
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <div class="w-full mt-3 relative">
+        <button 
+          id="btn-page1-next" 
+          class="btn-anime-glow group relative w-full max-w-[260px] py-3.5 sm:py-4 px-8 rounded-2xl bg-gradient-to-r from-pink-400 via-rose-400 to-pink-600 text-slate-950 font-['Bangers'] text-2xl sm:text-3xl tracking-widest uppercase border-2 border-amber-200/80 cursor-pointer transform hover:scale-105 active:scale-95 transition-all duration-200"
+        >
+          <span class="relative z-10 flex items-center justify-center gap-2 drop-shadow-sm">
+            CLICK HERE
+          </span>
+        </button>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         PAGE 2: MEMORY MATCHING GAME
+         ================================================================= -->
+    <section 
+      id="page-2" 
+      class="page-section hidden fixed inset-0 z-30 bg-[#12040b] text-white text-center opacity-0 transition-opacity duration-500 overflow-y-auto select-none"
+    >
+      <div class="w-full min-h-[100dvh] flex flex-col items-center justify-between py-5 sm:py-6 px-4 sm:px-6">
+        <div class="fixed inset-0 bg-[radial-gradient(circle_at_50%_35%,_rgba(244,114,182,0.16)_0%,_rgba(45,10,28,0.88)_55%,_#12040b_92%)] -z-20 pointer-events-none"></div>
+        <div class="fixed top-12 left-1/2 -translate-x-1/2 w-[500px] h-[320px] bg-pink-500/10 rounded-full blur-[130px] pointer-events-none -z-10"></div>
+
+        <div class="relative z-10 w-full max-w-xl mx-auto space-y-2.5 sm:space-y-3 mt-1">
+          <h2 class="text-2xl sm:text-5xl font-['Bangers'] tracking-wider uppercase text-transparent bg-clip-text bg-gradient-to-b from-white via-pink-200 to-rose-400 drop-shadow-[0_2px_20px_rgba(244,114,182,0.6)]">
+            Hold on, you've got a tiny challenge to get through!
+          </h2>
+          
+          <div class="flex items-center justify-center gap-3 sm:gap-4 text-xs sm:text-sm font-extrabold tracking-widest uppercase">
+            <div id="match-counter" class="px-4 sm:px-5 py-1.5 rounded-full bg-[#240816]/85 border border-pink-400/40 text-pink-200 shadow-[0_0_15px_rgba(244,114,182,0.2)]">
+              MATCHES: 0 / 3
+            </div>
+            <div id="move-counter" class="px-4 sm:px-5 py-1.5 rounded-full bg-[#240816]/85 border border-amber-300/40 text-amber-200 shadow-[0_0_15px_rgba(212,175,55,0.15)]">
+              MOVES: 0
+            </div>
+          </div>
+        </div>
+
+        <div class="relative z-10 w-full max-w-md mx-auto my-auto p-4 sm:p-7 rounded-3xl bg-gradient-to-b from-[#2b0b1d]/75 via-[#1c0612]/85 to-[#12040b]/90 border border-pink-400/30 backdrop-blur-xl shadow-[0_0_50px_rgba(244,114,182,0.2)]">
+          <div class="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-amber-300/70 rounded-tl"></div>
+          <div class="absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 border-amber-300/70 rounded-tr"></div>
+          <div class="absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-amber-300/70 rounded-bl"></div>
+          <div class="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-amber-300/70 rounded-br"></div>
+
+          <div id="card-grid" class="grid grid-cols-3 gap-2.5 sm:gap-4 w-full py-1"></div>
+
+          <div id="game-success-container" class="hidden mt-4 space-y-3 transition-all duration-500">
+            <p class="text-sm sm:text-base text-pink-100 font-semibold italic drop-shadow">
+              "You did it! ❤️ You've unlocked the next surprise!"
+            </p>
+            <button 
+              id="btn-page2-next" 
+              class="px-8 py-2.5 sm:py-3 rounded-2xl bg-gradient-to-r from-pink-400 via-rose-400 to-pink-600 text-slate-950 font-['Bangers'] text-lg sm:text-xl tracking-widest uppercase border border-amber-200/70 shadow-[0_0_30px_rgba(244,114,182,0.75)] hover:scale-105 active:scale-95 transition-all cursor-pointer"
+            >
+              CONTINUE
+            </button>
+          </div>
+        </div>
+
+        <div class="relative z-10 text-[11px] sm:text-xs text-pink-300/70 pb-1 font-semibold tracking-wider uppercase">
+          Match all 3 pairs to unlock the celebration
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         PAGE 3: BIRTHDAY GREETING AND FIREWORKS
+         ================================================================= -->
+    <section 
+      id="page-3" 
+      class="page-section hidden fixed inset-0 z-30 bg-[#12040b]/95 backdrop-blur-xl text-center opacity-0 transition-opacity duration-500 cursor-crosshair select-none overflow-hidden"
+    >
+      <div class="w-full h-[100dvh] flex flex-col items-center justify-between py-6 sm:py-8 px-5 sm:px-6">
+        <canvas id="fireworks-canvas" class="fixed inset-0 pointer-events-none z-0 w-full h-full"></canvas>
+
+        <div class="fixed top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-pink-500/15 rounded-full blur-[130px] pointer-events-none -z-10"></div>
+        <div class="fixed bottom-10 left-1/2 -translate-x-1/2 w-[400px] h-[200px] bg-rose-600/20 rounded-full blur-[110px] pointer-events-none -z-10"></div>
+
+        <div class="relative z-20 mt-1">
+          <p class="text-xs sm:text-sm font-medium text-pink-200/80 tracking-wider uppercase drop-shadow">
+            Tap anywhere to light up the sky ✨
+          </p>
+        </div>
+
+        <div class="relative z-10 max-w-3xl mx-auto space-y-5 sm:space-y-6 my-auto">
+          <div class="relative">
+            <h1 class="text-5xl sm:text-8xl font-['Bangers'] tracking-widest uppercase text-transparent bg-clip-text bg-gradient-to-b from-white via-pink-200 to-rose-400 drop-shadow-[0_0_45px_rgba(244,114,182,0.95)]">
+              HAPPY BIRTHDAY!
+            </h1>
+          </div>
+
+          <div class="relative group mx-auto max-w-2xl">
+            <div class="absolute -inset-0.5 bg-gradient-to-r from-pink-400 via-amber-200/60 to-rose-400 rounded-3xl blur opacity-35 group-hover:opacity-65 transition duration-500"></div>
+            
+            <blockquote class="relative p-6 sm:p-9 rounded-3xl bg-[#210714]/85 border border-pink-400/45 shadow-[0_0_60px_rgba(244,114,182,0.25)] backdrop-blur-xl">
+              <div class="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-amber-200/80"></div>
+              <div class="absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 border-amber-200/80"></div>
+              <div class="absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-amber-200/80"></div>
+              <div class="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-amber-200/80"></div>
+
+              <p class="text-base sm:text-2xl text-pink-50 font-semibold italic leading-relaxed tracking-wide drop-shadow">
+                "May the world be kinder than you expect, life be more beautiful than you imagine, and the days ahead give you countless reasons to smile."
+              </p>
+              
+              <div class="mt-5 sm:mt-6 flex items-center justify-center gap-3">
+                <span class="h-[1px] w-8 sm:w-10 bg-gradient-to-r from-transparent to-amber-200"></span>
+                <footer class="text-xs sm:text-sm font-black tracking-[0.22em] uppercase text-pink-300 drop-shadow-[0_0_8px_rgba(244,114,182,0.8)]">
+                  — TO THE DUMBEST UNCLE!
+                </footer>
+                <span class="h-[1px] w-8 sm:w-10 bg-gradient-to-l from-transparent to-amber-200"></span>
+              </div>
+            </blockquote>
+          </div>
+        </div>
+
+        <div class="relative z-10 pt-2 pb-1 flex flex-col items-center gap-2">
+          <button 
+            id="btn-page3-next" 
+            title="Continue to Cake Celebration"
+            class="group flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-r from-pink-400 via-rose-400 to-pink-600 text-slate-950 shadow-[0_0_35px_rgba(244,114,182,0.8)] hover:shadow-[0_0_55px_rgba(251,113,133,1)] border-2 border-amber-200 transform hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer animate-bounce"
+          >
+            <svg class="w-7 h-7 sm:w-8 sm:h-8 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         PAGE 4: INTERACTIVE BIRTHDAY CAKE & CANDLE-BLOWING CELEBRATION
+         ================================================================= -->
+    <section 
+      id="page-4" 
+      class="page-section hidden fixed inset-0 z-30 bg-[#12040b] text-white text-center opacity-0 transition-opacity duration-500 overflow-y-auto select-none"
+    >
+      <div class="w-full min-h-full flex flex-col items-center justify-between py-6 px-4 relative overflow-hidden">
+        <div class="fixed inset-0 bg-[radial-gradient(circle_at_50%_42%,_rgba(244,114,182,0.16)_0%,_rgba(45,10,28,0.9)_55%,_#12040b_95%)] -z-20 pointer-events-none"></div>
+        <div class="fixed top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[340px] bg-pink-400/12 rounded-full blur-[130px] pointer-events-none -z-10"></div>
+
+        <div id="page4-decor-stage" class="absolute inset-0 pointer-events-none -z-10 overflow-hidden"></div>
+
+        <div class="relative z-20 w-full max-w-xl mx-auto space-y-2.5 mt-1">
+          <h1 class="text-4xl sm:text-6xl font-['Bangers'] tracking-wider uppercase text-transparent bg-clip-text bg-gradient-to-b from-white via-pink-200 to-amber-200 drop-shadow-[0_2px_22px_rgba(244,114,182,0.5)]">
+            MAKE A WISH!
+          </h1>
+          
+          <div class="inline-block px-5 py-2 rounded-full bg-[#240816]/85 border border-pink-400/35 backdrop-blur-md shadow-[0_0_20px_rgba(244,114,182,0.15)]">
+            <p class="text-xs sm:text-sm font-semibold text-pink-50 tracking-wide">
+              Make a wish! ✨ Tap each candle to blow it out and let the celebration begin!
+            </p>
+          </div>
+        </div>
+
+        <!-- Centerpiece: Symmetrical Proportioned 3-Tier Cake (100% / ~78% / ~58%) -->
+        <div class="relative z-20 w-full max-w-[340px] sm:max-w-[380px] mx-auto my-auto flex flex-col items-center pt-8 pb-3">
+          
+          <div class="relative flex items-end justify-center gap-7 sm:gap-9 mb-[-6px] z-30 w-[58%]">
+            <div id="candle-1" class="candle-unit group flex flex-col items-center cursor-pointer px-1" data-candle-key="candle1" title="Tap to blow out">
+              <div class="flame-wrapper relative flex items-center justify-center h-8">
+                <div class="flame-glow absolute w-7 h-7 rounded-full bg-amber-400/40 blur-md pointer-events-none"></div>
+                <div class="flame-body w-3.5 h-6 rounded-[50%_50%_35%_35%] bg-gradient-to-t from-orange-500 via-amber-300 to-white shadow-[0_0_14px_rgba(251,191,36,0.95)] origin-bottom transition-all duration-500"></div>
+              </div>
+              <div class="w-[1.5px] h-2 bg-stone-300"></div>
+              <div class="relative w-3.5 h-11 rounded-t-sm bg-gradient-to-r from-[#fff1f2] via-white to-[#fbcfe8] border border-pink-300/60 shadow-md overflow-hidden">
+                <div class="absolute inset-0 opacity-45 bg-[repeating-linear-gradient(45deg,#f43f5e,#f43f5e_2px,transparent_2px,transparent_6px)]"></div>
+              </div>
+              <div class="w-5 h-1.5 rounded-full bg-gradient-to-r from-amber-500 via-amber-200 to-amber-500 shadow-sm -mt-0.5"></div>
+            </div>
+
+            <div id="candle-2" class="candle-unit group flex flex-col items-center cursor-pointer px-1" data-candle-key="candle2" title="Tap to blow out">
+              <div class="flame-wrapper relative flex items-center justify-center h-8">
+                <div class="flame-glow absolute w-8 h-8 rounded-full bg-amber-400/45 blur-md pointer-events-none"></div>
+                <div class="flame-body w-3.5 h-7 rounded-[50%_50%_35%_35%] bg-gradient-to-t from-orange-500 via-amber-300 to-white shadow-[0_0_16px_rgba(251,191,36,0.95)] origin-bottom transition-all duration-500"></div>
+              </div>
+              <div class="w-[1.5px] h-2 bg-stone-300"></div>
+              <div class="relative w-3.5 h-12 rounded-t-sm bg-gradient-to-r from-[#fff1f2] via-white to-[#fbcfe8] border border-pink-300/60 shadow-md overflow-hidden">
+                <div class="absolute inset-0 opacity-45 bg-[repeating-linear-gradient(45deg,#f43f5e,#f43f5e_2px,transparent_2px,transparent_6px)]"></div>
+              </div>
+              <div class="w-5 h-1.5 rounded-full bg-gradient-to-r from-amber-500 via-amber-200 to-amber-500 shadow-sm -mt-0.5"></div>
+            </div>
+
+            <div id="candle-3" class="candle-unit group flex flex-col items-center cursor-pointer px-1" data-candle-key="candle3" title="Tap to blow out">
+              <div class="flame-wrapper relative flex items-center justify-center h-8">
+                <div class="flame-glow absolute w-7 h-7 rounded-full bg-amber-400/40 blur-md pointer-events-none"></div>
+                <div class="flame-body w-3.5 h-6 rounded-[50%_50%_35%_35%] bg-gradient-to-t from-orange-500 via-amber-300 to-white shadow-[0_0_14px_rgba(251,191,36,0.95)] origin-bottom transition-all duration-500"></div>
+              </div>
+              <div class="w-[1.5px] h-2 bg-stone-300"></div>
+              <div class="relative w-3.5 h-11 rounded-t-sm bg-gradient-to-r from-[#fffbeb] via-white to-[#fbcfe8] border border-pink-300/60 shadow-md overflow-hidden">
+                <div class="absolute inset-0 opacity-45 bg-[repeating-linear-gradient(45deg,#f43f5e,#f43f5e_2px,transparent_2px,transparent_6px)]"></div>
+              </div>
+              <div class="w-5 h-1.5 rounded-full bg-gradient-to-r from-amber-500 via-amber-200 to-amber-500 shadow-sm -mt-0.5"></div>
+            </div>
+          </div>
+
+          <!-- TOP TIER (~58%) -->
+          <div class="cake-tier relative w-[58%] h-16 sm:h-18 z-20 flex flex-col items-center justify-center">
+            <div class="cake-top-surface absolute -top-3 inset-x-0 h-6 rounded-[50%] bg-gradient-to-r from-[#fce7f3] via-[#fff1f2] to-[#fbcfe8] border border-amber-200/60 shadow-[inset_0_2px_6px_rgba(244,114,182,0.3)] z-10"></div>
+            <div class="relative w-full h-full rounded-b-[50%_14px] bg-gradient-to-r from-[#500724] via-[#831843] to-[#4c0519] border-x border-b border-pink-300/45 shadow-[0_8px_20px_rgba(0,0,0,0.65),inset_0_4px_10px_rgba(255,255,255,0.18)] flex items-center justify-center overflow-hidden">
+              <svg class="absolute top-2 inset-x-0 w-full h-5 pointer-events-none opacity-85" viewBox="0 0 200 24" preserveAspectRatio="none">
+                <path d="M0,2 Q25,22 50,2 Q75,22 100,2 Q125,22 150,2 Q175,22 200,2" fill="none" stroke="#fff1f2" stroke-width="2.5" stroke-linecap="round" />
+                <path d="M0,5 Q25,24 50,5 Q75,24 100,5 Q125,24 150,5 Q175,24 200,5" fill="none" stroke="#fde68a" stroke-width="1.2" />
+              </svg>
+              <span class="relative z-10 font-['Bangers'] text-xl sm:text-2xl tracking-widest text-pink-100 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] mt-2">
+                Uncle!
+              </span>
+            </div>
+            <div class="absolute -bottom-1.5 inset-x-1 h-3 rounded-full bg-[radial-gradient(circle,_#fff1f2_40%,_#f472b6_75%,_transparent_80%)] bg-[size:10px_10px] z-20"></div>
+          </div>
+
+          <!-- MIDDLE TIER (~78%) -->
+          <div class="cake-tier relative w-[78%] h-20 sm:h-22 -mt-1.5 z-10 flex flex-col items-center justify-center">
+            <div class="cake-top-surface absolute -top-3.5 inset-x-0 h-7 rounded-[50%] bg-gradient-to-r from-[#fce7f3] via-[#fff1f2] to-[#f9a8d4] border border-amber-200/60 shadow-[inset_0_2px_6px_rgba(244,114,182,0.3)] z-0"></div>
+            <div class="relative w-full h-full rounded-b-[50%_18px] bg-gradient-to-r from-[#45061f] via-[#70143a] to-[#3b0414] border-x border-b border-pink-300/45 shadow-[0_12px_26px_rgba(0,0,0,0.75),inset_0_4px_12px_rgba(255,255,255,0.15)] flex items-center justify-center overflow-hidden">
+              <svg class="absolute top-2.5 inset-x-0 w-full h-5 pointer-events-none opacity-85" viewBox="0 0 260 24" preserveAspectRatio="none">
+                <path d="M0,2 Q26,22 52,2 Q78,22 104,2 Q130,22 156,2 Q182,22 208,2 Q234,22 260,2" fill="none" stroke="#fff1f2" stroke-width="2.5" stroke-linecap="round" />
+                <path d="M0,5 Q26,24 52,5 Q78,24 104,5 Q130,24 156,5 Q182,24 208,5 Q234,24 260,5" fill="none" stroke="#fde68a" stroke-width="1.2" />
+              </svg>
+              <span class="relative z-10 font-['Plus_Jakarta_Sans'] font-extrabold text-sm sm:text-base tracking-[0.22em] text-pink-100 drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)] mt-2">
+                07/03/2027
+              </span>
+            </div>
+            <div class="absolute -bottom-1.5 inset-x-1.5 h-3 rounded-full bg-[radial-gradient(circle,_#fff1f2_40%,_#f472b6_75%,_transparent_80%)] bg-[size:11px_11px] z-20"></div>
+          </div>
+
+          <!-- BOTTOM TIER (100%) -->
+          <div class="cake-tier relative w-full h-24 sm:h-26 -mt-1.5 z-0 flex flex-col items-center justify-center">
+            <div class="cake-top-surface absolute -top-4 inset-x-0 h-8 rounded-[50%] bg-gradient-to-r from-[#fbcfe8] via-[#fff1f2] to-[#f472b6] border border-amber-200/60 shadow-[inset_0_2px_8px_rgba(244,114,182,0.3)] z-0"></div>
+            <div class="relative w-full h-full rounded-b-[50%_22px] bg-gradient-to-r from-[#360417] via-[#590d2d] to-[#2d0210] border-x border-b border-pink-300/50 shadow-[0_16px_36px_rgba(0,0,0,0.85),inset_0_4px_14px_rgba(255,255,255,0.12)] flex items-center justify-center overflow-hidden">
+              <svg class="absolute top-3 inset-x-0 w-full h-6 pointer-events-none opacity-85" viewBox="0 0 340 26" preserveAspectRatio="none">
+                <path d="M0,2 Q28.3,23 56.6,2 Q85,23 113.3,2 Q141.6,23 170,2 Q198.3,23 226.6,2 Q255,23 283.3,2 Q311.6,23 340,2" fill="none" stroke="#fff1f2" stroke-width="2.6" stroke-linecap="round" />
+                <path d="M0,5 Q28.3,25 56.6,5 Q85,25 113.3,5 Q141.6,25 170,5 Q198.3,25 226.6,5 Q255,25 283.3,5 Q311.6,25 340,5" fill="none" stroke="#fde68a" stroke-width="1.3" />
+              </svg>
+              <span class="absolute left-5 bottom-4 text-pink-300/60 text-xs">✦</span>
+              <span class="absolute right-5 bottom-4 text-pink-300/60 text-xs">✦</span>
+
+              <span class="relative z-10 font-['Plus_Jakarta_Sans'] font-black text-base sm:text-lg tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-pink-100 via-white to-amber-200 drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)] mt-2.5">
+                Md Ahmed Khan
+              </span>
+            </div>
+            <div class="absolute -bottom-2 inset-x-1 h-3.5 rounded-full bg-[radial-gradient(circle,_#fff1f2_42%,_#f472b6_78%,_transparent_82%)] bg-[size:12px_12px] z-20"></div>
+          </div>
+
+          <div class="w-[108%] h-4.5 rounded-[50%] bg-gradient-to-r from-rose-500 via-amber-200 to-rose-500 shadow-[0_8px_25px_rgba(0,0,0,0.85)] -mt-0.5 border-t border-white/60"></div>
+          <div class="w-40 h-3.5 rounded-b-2xl bg-gradient-to-r from-rose-700 via-pink-300 to-rose-700 shadow-md"></div>
+        </div>
+
+        <div class="relative z-30 w-full max-w-lg mx-auto space-y-3 mb-1">
+          <p class="text-xs sm:text-sm text-pink-100 font-medium leading-relaxed italic px-4">
+            💖 May this special day bring endless happiness, beautiful memories! 💖
+          </p>
+          <p class="text-sm sm:text-base font-semibold text-cyan-300">
+            ✨ Tap to unleash a confetti storm! ✨
+          </p>
+          <div id="page4-continue-wrapper" class="hidden pt-1 transition-all duration-500">
+            <button 
+              id="btn-page4-next" 
+              class="px-9 py-3 rounded-2xl bg-gradient-to-r from-pink-400 via-rose-400 to-pink-600 hover:scale-105 active:scale-95 text-slate-950 font-['Bangers'] text-xl tracking-widest uppercase border border-amber-200 shadow-[0_0_28px_rgba(244,114,182,0.7)] transition-all cursor-pointer"
+            >
+              CONTINUE
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         PAGE 5: CHEERS TO 20!
+         ================================================================= -->
+    <section 
+      id="page-5" 
+      class="page-section hidden fixed inset-0 z-30 bg-[#12040b] text-white text-center opacity-0 transition-opacity duration-500 select-none overflow-hidden"
+    >
+      <div class="w-full h-[100dvh] flex flex-col items-center justify-between p-5 sm:p-6">
+        <div class="fixed inset-0 bg-[radial-gradient(circle_at_50%_40%,_rgba(244,114,182,0.16)_0%,_rgba(251,113,133,0.12)_35%,_rgba(45,10,28,0.92)_65%,_#12040b_95%)] -z-20 pointer-events-none"></div>
+        <div class="fixed top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[350px] bg-pink-400/12 rounded-full blur-[140px] pointer-events-none -z-10"></div>
+
+        <div id="emoji-stream-stage" class="fixed inset-0 pointer-events-none z-20 overflow-hidden"></div>
+
+        <div class="h-2 sm:h-4"></div>
+
+        <div class="relative z-30 w-full max-w-xl mx-auto px-6 py-7 sm:px-12 sm:py-10 rounded-[2.5rem] bg-gradient-to-b from-[#2b0b1d]/80 via-[#1c0612]/88 to-[#12040b]/92 border border-pink-300/40 backdrop-blur-2xl shadow-[0_20px_70px_rgba(0,0,0,0.85),0_0_45px_rgba(244,114,182,0.18)] space-y-4 sm:space-y-5 my-auto pointer-events-none">
+          <div class="absolute top-4 left-4 w-5 h-5 border-t-2 border-l-2 border-amber-200/65 rounded-tl-lg"></div>
+          <div class="absolute top-4 right-4 w-5 h-5 border-t-2 border-r-2 border-amber-200/65 rounded-tr-lg"></div>
+          <div class="absolute bottom-4 left-4 w-5 h-5 border-b-2 border-l-2 border-amber-200/65 rounded-bl-lg"></div>
+          <div class="absolute bottom-4 right-4 w-5 h-5 border-b-2 border-r-2 border-amber-200/65 rounded-br-lg"></div>
+
+          <div class="flex items-center justify-center gap-3 text-pink-300/80 text-xs tracking-widest">
+            <span>✦♡</span>
+            <span>❤️</span>
+            <span>♡✦</span>
+          </div>
+
+          <h1 class="text-5xl sm:text-7xl font-['Bangers'] tracking-wider uppercase text-transparent bg-clip-text bg-gradient-to-b from-white via-pink-100 to-rose-400 drop-shadow-[0_4px_25px_rgba(244,114,182,0.5)]">
+            CHEERS TO 20! 🥂
+          </h1>
+
+          <p class="text-base sm:text-xl text-pink-50 font-semibold italic leading-relaxed drop-shadow">
+            "Here's to new beginnings, unexpected adventures and a lifetime of beautiful moments ahead!"
+          </p>
+
+          <div class="pt-1 flex items-center justify-center gap-3">
+            <span class="h-[1px] w-12 bg-gradient-to-r from-transparent to-amber-200/60"></span>
+            <span class="text-pink-300 text-xs">✦</span>
+            <span class="h-[1px] w-12 bg-gradient-to-l from-transparent to-amber-200/60"></span>
+          </div>
+
+          <div class="pt-1 text-[11px] text-pink-300/85 font-semibold tracking-widest uppercase">
+            Tap anywhere ❤️
+          </div>
+        </div>
+
+        <div class="relative z-30 pb-1 sm:pb-2">
+          <button 
+            id="btn-page5-next" 
+            class="px-8 py-3 rounded-xl bg-[#240816]/90 hover:bg-[#330c20] border border-pink-300/40 text-pink-100 font-semibold text-xs tracking-[0.25em] uppercase shadow-md transition-all cursor-pointer"
+          >
+            CONTINUE
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         PAGE 6: SHOOTING STAR – MAKE A WISH (CINEMATIC GALAXY EXPERIENCE)
+         ================================================================= -->
+    <section 
+      id="page-6" 
+      class="page-section hidden fixed inset-0 z-30 bg-[#07020e] text-white text-center opacity-0 transition-opacity duration-700 overflow-hidden select-none"
+    >
+      <div class="relative w-full h-[100dvh] overflow-hidden">
+        <!-- Deep Midnight Blue, Purple & Subtle Rose Nebula Base -->
+        <div class="fixed inset-0 bg-[radial-gradient(ellipse_at_50%_38%,_rgba(88,28,135,0.34)_0%,_rgba(30,15,58,0.9)_52%,_#06020d_96%)] -z-30 pointer-events-none"></div>
+
+        <!-- Full-Viewport Cinematic Canvas (Parallax Stars, Drifting Nebula, Realistic Meteors & Particle Trails) -->
+        <canvas id="shooting-star-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-10"></canvas>
+
+        <!-- Opening Scene Title & Subtitle (Cardless, Directly Over the Galaxy) -->
+        <div 
+          id="shooting-star-opening" 
+          class="relative z-20 w-full max-w-2xl mx-auto px-6 pt-12 sm:pt-16 pointer-events-none opacity-0 translate-y-2 transition-all duration-1000 ease-out"
+        >
+          <h2 class="text-2xl sm:text-4xl md:text-5xl font-['Plus_Jakarta_Sans'] font-extrabold tracking-[0.18em] uppercase text-transparent bg-clip-text bg-gradient-to-b from-white via-amber-100 to-pink-200 drop-shadow-[0_0_24px_rgba(253,230,138,0.55)]">
+            SOME WISHES ARE WRITTEN IN THE STARS...
+          </h2>
+          <p class="mt-2.5 sm:mt-3 text-sm sm:text-lg font-medium tracking-[0.14em] text-pink-100/85 italic drop-shadow-[0_0_14px_rgba(244,114,182,0.45)]">
+            Make a wish and watch the sky.
+          </p>
+        </div>
+
+        <!-- Sky-Integrated Floating Wish Layer (Zero Boxes/Borders) -->
+        <div id="sky-wish-anchor" class="fixed z-20 pointer-events-none -translate-x-1/2 -translate-y-1/2 w-[88vw] max-w-md px-3 text-center">
+          <p id="sky-wish-text" class="sky-wish-typography is-hidden text-lg sm:text-2xl md:text-[26px] font-semibold italic leading-relaxed tracking-wide">
+            "May happiness find you in the simplest moments."
+          </p>
+        </div>
+
+        <!-- Grand Finale Centered Message & Pink Continue Button (Directly Over the Galaxy) -->
+        <div 
+          id="shooting-star-finale" 
+          class="fixed inset-0 z-30 flex flex-col items-center justify-center px-6 pointer-events-none opacity-0 transition-opacity duration-1000"
+        >
+          <p class="max-w-2xl text-xl sm:text-3xl md:text-4xl font-semibold italic leading-relaxed tracking-wide text-transparent bg-clip-text bg-gradient-to-b from-white via-amber-100 to-pink-200 drop-shadow-[0_0_28px_rgba(253,230,138,0.65)]">
+            "May your journey ahead be as beautiful as the universe above."
+          </p>
+
+          <div id="page6-continue-container" class="mt-8 sm:mt-10 opacity-0 translate-y-3 transition-all duration-700 pointer-events-auto">
+            <button
+              id="btn-page6-next"
+              type="button"
+              class="px-9 py-3.5 rounded-2xl bg-gradient-to-r from-pink-400 via-rose-400 to-pink-600 hover:scale-105 active:scale-95 text-slate-950 font-['Bangers'] text-xl sm:text-2xl tracking-widest uppercase border border-amber-200/80 shadow-[0_0_30px_rgba(244,114,182,0.75)] transition-all cursor-pointer"
+            >
+              CONTINUE
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         PAGE 7: GOODBYE PAGE
+         ================================================================= -->
+    <section 
+      id="page-7" 
+      class="page-section hidden fixed inset-0 z-30 bg-[#12040b] text-white text-center opacity-0 transition-opacity duration-700 select-none overflow-hidden cursor-pointer"
+    >
+      <div class="w-full h-[100dvh] flex flex-col items-center justify-center p-6 relative">
+        <div class="fixed inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(244,114,182,0.22)_0%,_rgba(251,113,133,0.14)_40%,_rgba(18,4,11,0.96)_78%)] -z-20 pointer-events-none"></div>
+        <div id="page7-horizon-glow" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-r from-pink-400/20 via-amber-200/15 to-rose-400/20 rounded-full blur-[130px] pointer-events-none -z-10 transition-opacity duration-1000 opacity-0 animate-pulse"></div>
+
+        <div id="page7-sparkle-stage" class="fixed inset-0 pointer-events-none -z-10 overflow-hidden"></div>
+
+        <canvas id="page7-interaction-canvas" class="fixed inset-0 pointer-events-none z-20 w-full h-full"></canvas>
+
+        <div class="relative z-30 max-w-xl mx-auto px-6 py-10 space-y-6 pointer-events-none">
+          <div id="goodbye-text-1" class="opacity-0 transition-opacity duration-1000">
+            <h1 class="text-5xl sm:text-7xl font-['Bangers'] tracking-wider uppercase text-transparent bg-clip-text bg-gradient-to-b from-white via-pink-100 to-rose-300 drop-shadow-[0_4px_30px_rgba(244,114,182,0.65)]">
+              GOODBYE
+            </h1>
+          </div>
+
+          <div id="goodbye-text-2" class="opacity-0 transition-opacity duration-1000 delay-500">
+            <p class="text-xl sm:text-2xl text-slate-100 font-semibold italic tracking-wide drop-shadow">
+              Keep smiling, Keep shining.
+            </p>
+          </div>
+
+          <div class="pt-2 flex items-center justify-center">
+            <div id="goodbye-tap-hint" class="text-xs text-amber-200/70 font-semibold tracking-widest uppercase opacity-0 transition-opacity duration-1000 delay-700">
+              Tap ✨
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </body>
+</html>
