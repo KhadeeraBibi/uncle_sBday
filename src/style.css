@@ -1,0 +1,306 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =================================================================
+   PAGE 1: ANIMATED CIRCULAR AVATAR & DELICATE ROSE-GOLD SPARKLES
+   ================================================================= */
+.luffy-circle-img {
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+@keyframes crownFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(-1deg);
+  }
+  50% {
+    transform: translateY(-4px) rotate(1.5deg);
+  }
+}
+
+.avatar-crown-float {
+  animation: crownFloat 2.8s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes avatarStarPulse {
+  0%, 100% {
+    opacity: 0.25;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.15);
+  }
+}
+
+.avatar-star-pulse {
+  animation: avatarStarPulse 2.4s ease-in-out infinite;
+  transform-origin: 40px 65px;
+}
+
+.avatar-star-pulse-delayed {
+  animation: avatarStarPulse 2.4s ease-in-out 1.2s infinite;
+  transform-origin: 160px 67px;
+}
+
+@keyframes delicateDiamondTwinkle {
+  0%, 100% {
+    opacity: 0.15;
+    transform: translateY(0px) scale(0.75) rotate(0deg);
+  }
+  50% {
+    opacity: 0.78;
+    transform: translateY(-5px) scale(1.05) rotate(12deg);
+  }
+}
+
+.diamond-sparkle {
+  position: absolute;
+  pointer-events: none;
+  animation: delicateDiamondTwinkle var(--duration, 3.8s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+  filter: drop-shadow(0 0 4px rgba(244, 114, 182, 0.5));
+}
+
+@keyframes floatCharacter {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.luffy-anim {
+  animation: floatCharacter 3.5s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 22px rgba(244, 114, 182, 0.55),
+      inset 0 0 12px rgba(255, 255, 255, 0.35);
+  }
+  50% {
+    box-shadow:
+      0 0 40px rgba(251, 113, 133, 0.9),
+      0 0 60px rgba(212, 175, 55, 0.35),
+      inset 0 0 18px rgba(255, 255, 255, 0.65);
+  }
+}
+
+.btn-anime-glow {
+  animation: pulseGlow 2.4s infinite ease-in-out;
+}
+
+/* =================================================================
+   PAGE 2: TRUE 180-DEGREE 3D CARD FLIP
+   ================================================================= */
+.card-container {
+  perspective: 1000px;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-inner.is-flipped {
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 1rem;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.card-back {
+  transform: rotateY(0deg);
+  -webkit-transform: rotateY(0deg);
+  z-index: 2;
+}
+
+.card-front {
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+  z-index: 1;
+}
+
+/* =================================================================
+   PAGE 4: CANDLE FLAME FLICKER & BLOW-OUT ANIMATION
+   ================================================================= */
+@keyframes naturalFlicker {
+  0%, 100% {
+    transform: scale(1, 1) rotate(-1deg);
+  }
+  25% {
+    transform: scale(1.05, 0.95) rotate(1.2deg);
+  }
+  50% {
+    transform: scale(0.95, 1.04) rotate(-0.8deg);
+  }
+  75% {
+    transform: scale(1.03, 0.98) rotate(1deg);
+  }
+}
+
+.flame-body:not(.is-extinguished) {
+  animation: naturalFlicker 1.3s ease-in-out infinite alternate;
+}
+
+.flame-body.is-extinguished {
+  transform: scale(0.1, 1.5) translateY(-14px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.flame-wrapper.is-extinguished .flame-glow {
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.45s ease-out;
+}
+
+/* =================================================================
+   PAGE 5: HORIZONTAL ROW EMOJI STREAM ANIMATION
+   ================================================================= */
+@keyframes riseHorizontalEmojiRow {
+  0% {
+    transform: translate3d(-50%, 12vh, 0) scale(0.85);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+    transform: translate3d(-50%, -5vh, 0) scale(1);
+  }
+  50% {
+    opacity: 0.95;
+    transform: translate3d(-50%, -50vh, 0) scale(1.03);
+  }
+  88% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate3d(-50%, -115vh, 0) scale(0.95);
+    opacity: 0;
+  }
+}
+
+.horizontal-emoji-stream-row {
+  position: fixed;
+  bottom: -4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  will-change: transform, opacity;
+  animation: riseHorizontalEmojiRow 4.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.horizontal-emoji-stream-row span {
+  display: inline-block;
+  margin: 0 4px;
+}
+
+@media (max-width: 640px) {
+  .horizontal-emoji-stream-row span {
+    margin: 0 2px;
+    font-size: 1.25rem !important;
+  }
+}
+
+/* =================================================================
+   PAGE 6: SHOOTING STAR – MAKE A WISH (SKY-INTEGRATED TYPOGRAPHY)
+   ================================================================= */
+@keyframes skyWishShimmer {
+  0% {
+    background-position: -180% center;
+  }
+  100% {
+    background-position: 180% center;
+  }
+}
+
+.sky-wish-typography {
+  background: linear-gradient(
+    110deg,
+    rgba(255, 251, 235, 0.94) 20%,
+    #ffffff 45%,
+    #fde68a 52%,
+    rgba(251, 207, 232, 0.96) 78%
+  );
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow:
+    0 0 22px rgba(253, 230, 138, 0.45),
+    0 0 38px rgba(244, 114, 182, 0.35);
+  transition:
+    opacity 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1.4s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 1.15s ease;
+  will-change: opacity, transform, filter;
+}
+
+.sky-wish-typography.is-hidden {
+  opacity: 0;
+  transform: translateY(12px) scale(0.97);
+  filter: blur(5px);
+}
+
+.sky-wish-typography.is-visible {
+  opacity: 1;
+  transform: translateY(0px) scale(1);
+  filter: blur(0px);
+  animation: skyWishShimmer 3.2s ease-in-out infinite;
+}
+
+.sky-wish-typography.is-dissolving {
+  opacity: 0;
+  transform: translateY(-14px) scale(1.02);
+  filter: blur(6px);
+}
+
+/* =================================================================
+   PAGE 4 & PAGE 7 CINEMATIC AMBIENT PARTICLES
+   ================================================================= */
+@keyframes cinematicFloat {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-14px) scale(1.12);
+  }
+}
+
+.cinematic-particle-float {
+  animation: cinematicFloat 4.5s ease-in-out infinite alternate;
+}
+
+@keyframes spinAstrolabe {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
