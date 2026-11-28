@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#12040b" />
     <title>HEY UNCLE! ✨ Birthday Celebration</title>
 
     <!-- Fonts -->
@@ -12,18 +14,18 @@
       href="https://fonts.googleapis.com/css2?family=Bangers&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <script type="module" crossorigin src="./assets/index-C6KkFkGK.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-BPWzbFs9.css">
+    <script type="module" crossorigin src="./assets/index-BTbNgCrj.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BhWGSAlB.css">
   </head>
   <body class="relative min-h-[100dvh] w-full bg-[#12040b] text-white overflow-hidden flex items-center justify-center font-['Plus_Jakarta_Sans'] select-none">
 
     <!-- Global Deep Berry, Dusty Rose & Champagne Pink Ambient Background -->
-    <div class="fixed inset-0 bg-[radial-gradient(circle_at_50%_35%,_rgba(244,114,182,0.18)_0%,_rgba(45,10,28,0.88)_55%,_#12040b_95%)] -z-30 pointer-events-none"></div>
-    <div class="fixed -top-36 -left-36 w-[520px] h-[520px] bg-pink-600/15 rounded-full blur-[140px] pointer-events-none -z-20"></div>
-    <div class="fixed -bottom-36 -right-36 w-[520px] h-[520px] bg-rose-500/15 rounded-full blur-[140px] pointer-events-none -z-20"></div>
+    <div class="fixed inset-0 bg-[radial-gradient(circle_at_50%_35%,_rgba(244,114,182,0.18)_0%,_rgba(45,10,28,0.88)_55%,_#12040b_95%)] z-0 pointer-events-none"></div>
+    <div class="fixed -top-36 -left-36 w-[520px] h-[520px] bg-pink-600/15 rounded-full blur-[140px] pointer-events-none z-0"></div>
+    <div class="fixed -bottom-36 -right-36 w-[520px] h-[520px] bg-rose-500/15 rounded-full blur-[140px] pointer-events-none z-0"></div>
 
-    <!-- Dynamic Diamond-Shaped Sparkles Layer -->
-    <div id="sparkle-field" class="fixed inset-0 pointer-events-none -z-10 overflow-hidden"></div>
+    <!-- Rich Restored Golden & Rose-Champagne Diamond Sparkles Layer (Above Card Backdrop, Below Interactive Controls) -->
+    <div id="sparkle-field" class="fixed inset-0 pointer-events-none z-[15] overflow-hidden"></div>
 
     <!-- Global Confetti Canvas (Shared across pages) -->
     <canvas id="confetti-canvas" class="fixed inset-0 pointer-events-none z-50 w-full h-full"></canvas>
@@ -127,7 +129,7 @@
         </div>
       </div>
 
-      <div class="w-full mt-3 relative">
+      <div class="w-full mt-3 relative z-20">
         <button 
           id="btn-page1-next" 
           class="btn-anime-glow group relative w-full max-w-[260px] py-3.5 sm:py-4 px-8 rounded-2xl bg-gradient-to-r from-pink-400 via-rose-400 to-pink-600 text-slate-950 font-['Bangers'] text-2xl sm:text-3xl tracking-widest uppercase border-2 border-amber-200/80 cursor-pointer transform hover:scale-105 active:scale-95 transition-all duration-200"
@@ -140,7 +142,7 @@
     </section>
 
     <!-- =================================================================
-         PAGE 2: MEMORY MATCHING GAME
+         PAGE 2: MEMORY MATCHING GAME (CONSISTENT 3x2 GRID ACROSS BROWSERS)
          ================================================================= -->
     <section 
       id="page-2" 
@@ -165,13 +167,13 @@
           </div>
         </div>
 
-        <div class="relative z-10 w-full max-w-md mx-auto my-auto p-4 sm:p-7 rounded-3xl bg-gradient-to-b from-[#2b0b1d]/75 via-[#1c0612]/85 to-[#12040b]/90 border border-pink-400/30 backdrop-blur-xl shadow-[0_0_50px_rgba(244,114,182,0.2)]">
+        <div class="relative z-10 w-[min(94vw,430px)] mx-auto my-auto p-4 sm:p-6 rounded-3xl bg-gradient-to-b from-[#2b0b1d]/80 via-[#1c0612]/90 to-[#12040b]/95 border border-pink-400/35 backdrop-blur-xl shadow-[0_0_50px_rgba(244,114,182,0.22)]">
           <div class="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-amber-300/70 rounded-tl"></div>
           <div class="absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 border-amber-300/70 rounded-tr"></div>
           <div class="absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-amber-300/70 rounded-bl"></div>
           <div class="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-amber-300/70 rounded-br"></div>
 
-          <div id="card-grid" class="grid grid-cols-3 gap-2.5 sm:gap-4 w-full py-1"></div>
+          <div id="card-grid" class="memory-card-grid w-full py-1"></div>
 
           <div id="game-success-container" class="hidden mt-4 space-y-3 transition-all duration-500">
             <p class="text-sm sm:text-base text-pink-100 font-semibold italic drop-shadow">
@@ -257,13 +259,13 @@
     </section>
 
     <!-- =================================================================
-         PAGE 4: INTERACTIVE BIRTHDAY CAKE & CANDLE-BLOWING CELEBRATION
+         PAGE 4: INTERACTIVE BIRTHDAY CAKE (WITH CURVED PEARL PIPING)
          ================================================================= -->
     <section 
       id="page-4" 
       class="page-section hidden fixed inset-0 z-30 bg-[#12040b] text-white text-center opacity-0 transition-opacity duration-500 overflow-y-auto select-none"
     >
-      <div class="w-full min-h-full flex flex-col items-center justify-between py-6 px-4 relative overflow-hidden">
+      <div class="w-full min-h-[100dvh] flex flex-col items-center justify-between py-6 px-4 relative overflow-hidden">
         <div class="fixed inset-0 bg-[radial-gradient(circle_at_50%_42%,_rgba(244,114,182,0.16)_0%,_rgba(45,10,28,0.9)_55%,_#12040b_95%)] -z-20 pointer-events-none"></div>
         <div class="fixed top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[340px] bg-pink-400/12 rounded-full blur-[130px] pointer-events-none -z-10"></div>
 
@@ -334,7 +336,24 @@
                 Uncle!
               </span>
             </div>
-            <div class="absolute -bottom-1.5 inset-x-1 h-3 rounded-full bg-[radial-gradient(circle,_#fff1f2_40%,_#f472b6_75%,_transparent_80%)] bg-[size:10px_10px] z-20"></div>
+            <!-- Curved Pearl Piping Following Top Tier Contour -->
+            <svg viewBox="0 0 200 22" preserveAspectRatio="none" class="absolute -bottom-[5px] inset-x-0 w-full h-[22px] z-20 pointer-events-none overflow-visible">
+              <defs>
+                <radialGradient id="pearlGradTop" cx="35%" cy="35%" r="65%">
+                  <stop offset="0%" stop-color="#ffffff" />
+                  <stop offset="55%" stop-color="#fce7f3" />
+                  <stop offset="100%" stop-color="#f472b6" />
+                </radialGradient>
+              </defs>
+              <g fill="url(#pearlGradTop)">
+                <circle cx="5" cy="5.5" r="3.6" /><circle cx="15" cy="8.2" r="3.8" /><circle cx="26" cy="10.5" r="4.0" />
+                <circle cx="37" cy="12.3" r="4.1" /><circle cx="49" cy="13.8" r="4.2" /><circle cx="61" cy="15.0" r="4.3" />
+                <circle cx="74" cy="15.8" r="4.4" /><circle cx="87" cy="16.3" r="4.4" /><circle cx="100" cy="16.5" r="4.5" />
+                <circle cx="113" cy="16.3" r="4.4" /><circle cx="126" cy="15.8" r="4.4" /><circle cx="139" cy="15.0" r="4.3" />
+                <circle cx="151" cy="13.8" r="4.2" /><circle cx="163" cy="12.3" r="4.1" /><circle cx="174" cy="10.5" r="4.0" />
+                <circle cx="185" cy="8.2" r="3.8" /><circle cx="195" cy="5.5" r="3.6" />
+              </g>
+            </svg>
           </div>
 
           <!-- MIDDLE TIER (~78%) -->
@@ -349,7 +368,18 @@
                 07/03/2027
               </span>
             </div>
-            <div class="absolute -bottom-1.5 inset-x-1.5 h-3 rounded-full bg-[radial-gradient(circle,_#fff1f2_40%,_#f472b6_75%,_transparent_80%)] bg-[size:11px_11px] z-20"></div>
+            <!-- Curved Pearl Piping Following Middle Tier Contour -->
+            <svg viewBox="0 0 260 26" preserveAspectRatio="none" class="absolute -bottom-[6px] inset-x-0 w-full h-[26px] z-20 pointer-events-none overflow-visible">
+              <g fill="url(#pearlGradTop)">
+                <circle cx="5" cy="6.2" r="3.8" /><circle cx="16" cy="9.4" r="4.0" /><circle cx="28" cy="12.2" r="4.2" />
+                <circle cx="40" cy="14.5" r="4.3" /><circle cx="53" cy="16.4" r="4.4" /><circle cx="67" cy="17.9" r="4.5" />
+                <circle cx="81" cy="19.1" r="4.6" /><circle cx="95" cy="19.9" r="4.7" /><circle cx="110" cy="20.4" r="4.7" />
+                <circle cx="125" cy="20.6" r="4.8" /><circle cx="140" cy="20.5" r="4.8" /><circle cx="155" cy="20.2" r="4.7" />
+                <circle cx="170" cy="19.5" r="4.6" /><circle cx="184" cy="18.6" r="4.6" /><circle cx="198" cy="17.3" r="4.5" />
+                <circle cx="212" cy="15.6" r="4.4" /><circle cx="225" cy="13.5" r="4.2" /><circle cx="238" cy="11.0" r="4.0" />
+                <circle cx="250" cy="8.0" r="3.8" /><circle cx="256" cy="5.8" r="3.6" />
+              </g>
+            </svg>
           </div>
 
           <!-- BOTTOM TIER (100%) -->
@@ -367,7 +397,19 @@
                 Md Ahmed Khan
               </span>
             </div>
-            <div class="absolute -bottom-2 inset-x-1 h-3.5 rounded-full bg-[radial-gradient(circle,_#fff1f2_42%,_#f472b6_78%,_transparent_82%)] bg-[size:12px_12px] z-20"></div>
+            <!-- Curved Pearl Piping Following Bottom Tier Contour -->
+            <svg viewBox="0 0 340 30" preserveAspectRatio="none" class="absolute -bottom-[7px] inset-x-0 w-full h-[30px] z-20 pointer-events-none overflow-visible">
+              <g fill="url(#pearlGradTop)">
+                <circle cx="5" cy="7.0" r="4.0" /><circle cx="17" cy="10.4" r="4.2" /><circle cx="30" cy="13.5" r="4.4" />
+                <circle cx="44" cy="16.2" r="4.5" /><circle cx="59" cy="18.5" r="4.6" /><circle cx="74" cy="20.4" r="4.7" />
+                <circle cx="90" cy="21.9" r="4.8" /><circle cx="106" cy="23.1" r="4.9" /><circle cx="123" cy="24.0" r="5.0" />
+                <circle cx="140" cy="24.6" r="5.0" /><circle cx="157" cy="24.9" r="5.1" /><circle cx="174" cy="25.0" r="5.1" />
+                <circle cx="191" cy="24.8" r="5.1" /><circle cx="208" cy="24.3" r="5.0" /><circle cx="225" cy="23.5" r="4.9" />
+                <circle cx="241" cy="22.4" r="4.8" /><circle cx="257" cy="21.0" r="4.7" /><circle cx="273" cy="19.2" r="4.6" />
+                <circle cx="288" cy="17.1" r="4.5" /><circle cx="303" cy="14.6" r="4.4" /><circle cx="317" cy="11.7" r="4.2" />
+                <circle cx="330" cy="8.4" r="4.0" /><circle cx="336" cy="6.6" r="3.9" />
+              </g>
+            </svg>
           </div>
 
           <div class="w-[108%] h-4.5 rounded-[50%] bg-gradient-to-r from-rose-500 via-amber-200 to-rose-500 shadow-[0_8px_25px_rgba(0,0,0,0.85)] -mt-0.5 border-t border-white/60"></div>
@@ -415,9 +457,9 @@
           <div class="absolute bottom-4 right-4 w-5 h-5 border-b-2 border-r-2 border-amber-200/65 rounded-br-lg"></div>
 
           <div class="flex items-center justify-center gap-3 text-pink-300/80 text-xs tracking-widest">
-            <span>✦♡</span>
+            <span>♡</span>
             <span>❤️</span>
-            <span>♡✦</span>
+            <span>♡</span>
           </div>
 
           <h1 class="text-5xl sm:text-7xl font-['Bangers'] tracking-wider uppercase text-transparent bg-clip-text bg-gradient-to-b from-white via-pink-100 to-rose-400 drop-shadow-[0_4px_25px_rgba(244,114,182,0.5)]">
@@ -451,55 +493,55 @@
     </section>
 
     <!-- =================================================================
-         PAGE 6: SHOOTING STAR – MAKE A WISH (CINEMATIC GALAXY EXPERIENCE)
+         PAGE 6: SHOOTING STAR – MAKE A WISH (DENSE STARFIELD & REFINED TEXT)
          ================================================================= -->
     <section 
       id="page-6" 
-      class="page-section hidden fixed inset-0 z-30 bg-[#07020e] text-white text-center opacity-0 transition-opacity duration-700 overflow-hidden select-none"
+      class="page-section hidden fixed inset-0 z-30 bg-[#04010a] text-white text-center opacity-0 transition-opacity duration-700 overflow-hidden select-none"
     >
       <div class="relative w-full h-[100dvh] overflow-hidden">
-        <!-- Deep Midnight Blue, Purple & Subtle Rose Nebula Base -->
-        <div class="fixed inset-0 bg-[radial-gradient(ellipse_at_50%_38%,_rgba(88,28,135,0.34)_0%,_rgba(30,15,58,0.9)_52%,_#06020d_96%)] -z-30 pointer-events-none"></div>
+        <!-- Rich Dark Midnight Purple, Deep Violet & Subtle Navy Sky Backdrop -->
+        <div class="fixed inset-0 bg-[radial-gradient(ellipse_at_50%_36%,_rgba(59,17,102,0.34)_0%,_rgba(20,9,44,0.92)_54%,_#04010a_96%)] -z-30 pointer-events-none"></div>
 
-        <!-- Full-Viewport Cinematic Canvas (Parallax Stars, Drifting Nebula, Realistic Meteors & Particle Trails) -->
+        <!-- Full-Viewport Hardware-Accelerated Canvas (Rich Moving Starfield & Choreographed Meteors) -->
         <canvas id="shooting-star-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-10"></canvas>
 
-        <!-- Opening Scene Title & Subtitle (Cardless, Directly Over the Galaxy) -->
+        <!-- Compact, Visually Balanced Opening Title & Subtitle -->
         <div 
           id="shooting-star-opening" 
-          class="relative z-20 w-full max-w-2xl mx-auto px-6 pt-12 sm:pt-16 pointer-events-none opacity-0 translate-y-2 transition-all duration-1000 ease-out"
+          class="relative z-20 w-full max-w-xl mx-auto px-5 pt-10 sm:pt-14 pointer-events-none opacity-0 translate-y-2 transition-all duration-1000 ease-out"
         >
-          <h2 class="text-2xl sm:text-4xl md:text-5xl font-['Plus_Jakarta_Sans'] font-extrabold tracking-[0.18em] uppercase text-transparent bg-clip-text bg-gradient-to-b from-white via-amber-100 to-pink-200 drop-shadow-[0_0_24px_rgba(253,230,138,0.55)]">
+          <h2 class="text-lg sm:text-2xl md:text-3xl font-['Plus_Jakarta_Sans'] font-bold tracking-[0.16em] uppercase text-transparent bg-clip-text bg-gradient-to-b from-white via-amber-100 to-pink-200 drop-shadow-[0_0_20px_rgba(253,230,138,0.5)]">
             SOME WISHES ARE WRITTEN IN THE STARS...
           </h2>
-          <p class="mt-2.5 sm:mt-3 text-sm sm:text-lg font-medium tracking-[0.14em] text-pink-100/85 italic drop-shadow-[0_0_14px_rgba(244,114,182,0.45)]">
+          <p class="mt-1.5 sm:mt-2 text-xs sm:text-base font-medium tracking-[0.14em] text-pink-100/80 italic drop-shadow-[0_0_12px_rgba(244,114,182,0.4)]">
             Make a wish and watch the sky.
           </p>
         </div>
 
-        <!-- Sky-Integrated Floating Wish Layer (Zero Boxes/Borders) -->
-        <div id="sky-wish-anchor" class="fixed z-20 pointer-events-none -translate-x-1/2 -translate-y-1/2 w-[88vw] max-w-md px-3 text-center">
-          <p id="sky-wish-text" class="sky-wish-typography is-hidden text-lg sm:text-2xl md:text-[26px] font-semibold italic leading-relaxed tracking-wide">
-            "May happiness find you in the simplest moments."
+        <!-- Sky-Integrated Floating Wish Layer (Compact, Poetic & Cardless) -->
+        <div id="sky-wish-anchor" class="fixed z-20 pointer-events-none -translate-x-1/2 -translate-y-1/2 w-[84vw] max-w-sm px-2 text-center">
+          <p id="sky-wish-text" class="sky-wish-typography is-hidden text-base sm:text-xl md:text-2xl font-semibold italic leading-snug tracking-wide">
+            "Happiness in simple moments."
           </p>
         </div>
 
-        <!-- Grand Finale Centered Message & Pink Continue Button (Directly Over the Galaxy) -->
+        <!-- Grand Finale Centered Message & Pink NEXT Button (Directly Over the Galaxy) -->
         <div 
           id="shooting-star-finale" 
           class="fixed inset-0 z-30 flex flex-col items-center justify-center px-6 pointer-events-none opacity-0 transition-opacity duration-1000"
         >
-          <p class="max-w-2xl text-xl sm:text-3xl md:text-4xl font-semibold italic leading-relaxed tracking-wide text-transparent bg-clip-text bg-gradient-to-b from-white via-amber-100 to-pink-200 drop-shadow-[0_0_28px_rgba(253,230,138,0.65)]">
-            "May your journey ahead be as beautiful as the universe above."
+          <p class="max-w-lg text-lg sm:text-2xl md:text-3xl font-semibold italic leading-relaxed tracking-wide text-transparent bg-clip-text bg-gradient-to-b from-white via-amber-100 to-pink-200 drop-shadow-[0_0_26px_rgba(253,230,138,0.6)]">
+            And with that another year begins!
           </p>
 
-          <div id="page6-continue-container" class="mt-8 sm:mt-10 opacity-0 translate-y-3 transition-all duration-700 pointer-events-auto">
+          <div id="page6-continue-container" class="mt-7 sm:mt-9 opacity-0 translate-y-3 transition-all duration-700 pointer-events-auto">
             <button
               id="btn-page6-next"
               type="button"
-              class="px-9 py-3.5 rounded-2xl bg-gradient-to-r from-pink-400 via-rose-400 to-pink-600 hover:scale-105 active:scale-95 text-slate-950 font-['Bangers'] text-xl sm:text-2xl tracking-widest uppercase border border-amber-200/80 shadow-[0_0_30px_rgba(244,114,182,0.75)] transition-all cursor-pointer"
+              class="px-10 py-3 rounded-2xl bg-gradient-to-r from-pink-400 via-rose-400 to-pink-600 hover:scale-105 active:scale-95 text-slate-950 font-['Bangers'] text-xl sm:text-2xl tracking-widest uppercase border border-amber-200/80 shadow-[0_0_30px_rgba(244,114,182,0.75)] transition-all cursor-pointer"
             >
-              CONTINUE
+              NEXT
             </button>
           </div>
         </div>
