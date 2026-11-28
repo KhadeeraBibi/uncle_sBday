@@ -3,7 +3,20 @@
 @tailwind utilities;
 
 /* =================================================================
-   PAGE 1: ANIMATED CIRCULAR AVATAR & DELICATE ROSE-GOLD SPARKLES
+   CROSS-BROWSER BASE CONSISTENCY (CHROME, BRAVE, EDGE, SAFARI)
+   ================================================================= */
+html,
+body {
+  color-scheme: dark;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background-color: #12040b;
+  overflow-x: hidden;
+  touch-action: manipulation;
+}
+
+/* =================================================================
+   PAGE 1: ANIMATED CIRCULAR AVATAR & DELICATE EXTERIOR SPARKLES
    ================================================================= */
 .luffy-circle-img {
   border-radius: 50%;
@@ -48,12 +61,12 @@
 
 @keyframes delicateDiamondTwinkle {
   0%, 100% {
-    opacity: 0.15;
-    transform: translateY(0px) scale(0.75) rotate(0deg);
+    opacity: 0.22;
+    transform: translateY(0px) scale(0.82) rotate(0deg);
   }
   50% {
-    opacity: 0.78;
-    transform: translateY(-5px) scale(1.05) rotate(12deg);
+    opacity: 0.85;
+    transform: translateY(-4px) scale(1.04) rotate(12deg);
   }
 }
 
@@ -62,7 +75,15 @@
   pointer-events: none;
   animation: delicateDiamondTwinkle var(--duration, 3.8s) ease-in-out infinite;
   animation-delay: var(--delay, 0s);
-  filter: drop-shadow(0 0 4px rgba(244, 114, 182, 0.5));
+  filter: drop-shadow(0 0 3px rgba(253, 230, 138, 0.55)) drop-shadow(0 0 6px rgba(244, 114, 182, 0.35));
+}
+
+.glow-dot-particle {
+  position: absolute;
+  border-radius: 9999px;
+  pointer-events: none;
+  animation: delicateDiamondTwinkle var(--duration, 4.1s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
 }
 
 @keyframes floatCharacter {
@@ -97,10 +118,31 @@
 }
 
 /* =================================================================
-   PAGE 2: TRUE 180-DEGREE 3D CARD FLIP
+   PAGE 2: CONSISTENT 3x2 MEMORY CARD PROPORTIONS (CHROME & BRAVE)
    ================================================================= */
+.memory-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .memory-card-grid {
+    gap: 0.9rem;
+  }
+}
+
 .card-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  min-height: 112px;
   perspective: 1000px;
+  -webkit-perspective: 1000px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .card-inner {
@@ -110,6 +152,7 @@
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
   transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
 }
 
 .card-inner.is-flipped {
@@ -126,17 +169,20 @@
   border-radius: 1rem;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .card-back {
-  transform: rotateY(0deg);
-  -webkit-transform: rotateY(0deg);
+  transform: rotateY(0deg) translateZ(1px);
+  -webkit-transform: rotateY(0deg) translateZ(1px);
   z-index: 2;
 }
 
 .card-front {
-  transform: rotateY(180deg);
-  -webkit-transform: rotateY(180deg);
+  transform: rotateY(180deg) translateZ(1px);
+  -webkit-transform: rotateY(180deg) translateZ(1px);
   z-index: 1;
 }
 
@@ -228,7 +274,7 @@
 }
 
 /* =================================================================
-   PAGE 6: SHOOTING STAR – MAKE A WISH (SKY-INTEGRATED TYPOGRAPHY)
+   PAGE 6: SHOOTING STAR – MAKE A WISH (UNCHANGED)
    ================================================================= */
 @keyframes skyWishShimmer {
   0% {
@@ -242,7 +288,7 @@
 .sky-wish-typography {
   background: linear-gradient(
     110deg,
-    rgba(255, 251, 235, 0.94) 20%,
+    rgba(255, 251, 235, 0.96) 20%,
     #ffffff 45%,
     #fde68a 52%,
     rgba(251, 207, 232, 0.96) 78%
@@ -252,48 +298,50 @@
   background-clip: text;
   color: transparent;
   text-shadow:
-    0 0 22px rgba(253, 230, 138, 0.45),
-    0 0 38px rgba(244, 114, 182, 0.35);
+    0 0 20px rgba(253, 230, 138, 0.48),
+    0 0 34px rgba(244, 114, 182, 0.32);
   transition:
-    opacity 1.15s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 1.4s cubic-bezier(0.22, 1, 0.36, 1),
-    filter 1.15s ease;
+    opacity 0.95s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.95s ease;
   will-change: opacity, transform, filter;
 }
 
 .sky-wish-typography.is-hidden {
   opacity: 0;
-  transform: translateY(12px) scale(0.97);
-  filter: blur(5px);
+  transform: translate3d(0, 10px, 0) scale(0.97);
+  filter: blur(4px);
 }
 
 .sky-wish-typography.is-visible {
   opacity: 1;
-  transform: translateY(0px) scale(1);
+  transform: translate3d(0, 0, 0) scale(1);
   filter: blur(0px);
   animation: skyWishShimmer 3.2s ease-in-out infinite;
 }
 
 .sky-wish-typography.is-dissolving {
   opacity: 0;
-  transform: translateY(-14px) scale(1.02);
-  filter: blur(6px);
+  transform: translate3d(0, -12px, 0) scale(1.02);
+  filter: blur(5px);
 }
 
 /* =================================================================
-   PAGE 4 & PAGE 7 CINEMATIC AMBIENT PARTICLES
+   PAGE 4 & PAGE 7 SUBTLE AMBIENT PARTICLES
    ================================================================= */
 @keyframes cinematicFloat {
   0%, 100% {
-    transform: translateY(0px) scale(1);
+    opacity: 0.32;
+    transform: translateY(0px) scale(0.92);
   }
   50% {
-    transform: translateY(-14px) scale(1.12);
+    opacity: 0.78;
+    transform: translateY(-7px) scale(1.04);
   }
 }
 
 .cinematic-particle-float {
-  animation: cinematicFloat 4.5s ease-in-out infinite alternate;
+  animation: cinematicFloat 4.8s ease-in-out infinite alternate;
 }
 
 @keyframes spinAstrolabe {

@@ -45,6 +45,105 @@ function navigateToPage(fromPageNum, toPageNum, onEnterCallback) {
 }
 
 // ============================================================================
+// SHARED RESPONSIVE AMBIENT SPARKLE SCATTER HELPER (PAGES 1, 4 & 7 ONLY)
+// ============================================================================
+function scatterAmbientSparkles({
+  container,
+  targetCount,
+  minDist,
+  exclusionZones = [],
+  edgeMarginPct = 5,
+  sizeScale = 1
+}) {
+  if (!container) return;
+  container.innerHTML = '';
+
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  const placedCoords = [];
+  const hexColors = ['#fde68a', '#fef3c7', '#fbcfe8', '#f9a8d4', '#fbbf24'];
+
+  const isExcluded = (px, py) => {
+    return exclusionZones.some(
+      (zone) =>
+        px >= zone.left &&
+        px <= zone.right &&
+        py >= zone.top &&
+        py <= zone.bottom
+    );
+  };
+
+  let placed = 0;
+  let attempts = 0;
+  const maxAttempts = targetCount * 35;
+
+  while (placed < targetCount && attempts < maxAttempts) {
+    attempts++;
+    const span = 100 - edgeMarginPct * 2;
+    const topPct = Math.random() * span + edgeMarginPct;
+    const leftPct = Math.random() * span + edgeMarginPct;
+    const px = (leftPct / 100) * vw;
+    const py = (topPct / 100) * vh;
+
+    if (isExcluded(px, py)) continue;
+
+    const tooClose = placedCoords.some(
+      (pt) => Math.hypot(pt.x - px, pt.y - py) < minDist
+    );
+    if (tooClose) continue;
+
+    placedCoords.push({ x: px, y: py });
+
+    const el = document.createElement('div');
+    const colorHex = hexColors[placed % hexColors.length];
+    const duration = (Math.random() * 2.4 + 3.2).toFixed(2);
+    const delay = (Math.random() * 3.5).toFixed(2);
+
+    el.style.top = `${topPct.toFixed(2)}%`;
+    el.style.left = `${leftPct.toFixed(2)}%`;
+    el.style.setProperty('--duration', `${duration}s`);
+    el.style.setProperty('--delay', `${delay}s`);
+
+    // Balanced mix: ~50% tiny glowing dots, ~35% delicate small stars, ~15% subtle accent stars
+    const mod = placed % 6;
+    if (mod === 1 || mod === 3 || mod === 5) {
+      const dotSize = Math.max(2, Math.round((Math.random() * 1.4 + 2.2) * sizeScale));
+      el.className = 'glow-dot-particle';
+      el.style.width = `${dotSize}px`;
+      el.style.height = `${dotSize}px`;
+      el.style.backgroundColor = colorHex;
+      el.style.opacity = '0.78';
+      el.style.boxShadow = `0 0 ${dotSize * 2}px ${colorHex}`;
+    } else if (mod === 0) {
+      // Occasional slightly larger accent sparkle (never placed adjacent due to minDist)
+      const accentSize = Math.max(8, Math.round((Math.random() * 2 + 9.5) * sizeScale));
+      el.className = 'diamond-sparkle';
+      el.style.width = `${accentSize}px`;
+      el.style.height = `${accentSize}px`;
+      el.innerHTML = `
+        <svg viewBox="0 0 24 24" class="w-full h-full">
+          <path fill="${colorHex}" d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4L12 0Z" />
+        </svg>
+      `;
+    } else {
+      // Fine, delicate small diamond stars
+      const smallSize = Math.max(5, Math.round((Math.random() * 2 + 5.8) * sizeScale));
+      el.className = 'diamond-sparkle';
+      el.style.width = `${smallSize}px`;
+      el.style.height = `${smallSize}px`;
+      el.innerHTML = `
+        <svg viewBox="0 0 24 24" class="w-full h-full">
+          <path fill="${colorHex}" d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4L12 0Z" />
+        </svg>
+      `;
+    }
+
+    container.appendChild(el);
+    placed++;
+  }
+}
+
+// ============================================================================
 // SHARED MICRO-SQUARE CONFETTI ENGINE (USED BY PAGE 2 & PAGE 4)
 // ============================================================================
 const confettiCanvas = document.getElementById('confetti-canvas');
@@ -202,7 +301,7 @@ function triggerTwoSecondConfettiStorm(onCompleteCallback) {
 }
 
 // ============================================================================
-// PAGE 1: WELCOME SCREEN (HEY UNCLE!)
+// PAGE 1: WELCOME SCREEN (HEY UNCLE!) - EXTERIOR REFINED SPARKLES & GLOW DOTS
 // ============================================================================
 const sparkleField = document.getElementById('sparkle-field');
 const heroCard = document.getElementById('page-1');
@@ -210,39 +309,38 @@ const btnPage1Next = document.getElementById('btn-page1-next');
 
 function spawnDiamondSparkles() {
   if (!sparkleField) return;
-  sparkleField.innerHTML = '';
+  const vw = window.innerWidth;
+  const isMobile = vw < 640;
+  const isTablet = vw >= 640 && vw < 1024;
 
-  const sparkleCount = 28;
-  const colors = ['text-pink-200', 'text-rose-300', 'text-amber-200', 'text-pink-300/80'];
+  const cardRect = heroCard && !heroCard.classList.contains('hidden')
+    ? heroCard.getBoundingClientRect()
+    : null;
+  const pad = 18;
 
-  for (let i = 0; i < sparkleCount; i++) {
-    const wrapper = document.createElement('div');
-    const size = Math.floor(Math.random() * 7) + 8;
-    const top = Math.random() * 94 + 3;
-    const left = Math.random() * 94 + 3;
-    const duration = (Math.random() * 2.5 + 2.8).toFixed(2);
-    const delay = (Math.random() * 3.5).toFixed(2);
-    const colorClass = colors[Math.floor(Math.random() * colors.length)];
+  const exclusionZones = cardRect && cardRect.width > 0
+    ? [{
+        left: cardRect.left - pad,
+        right: cardRect.right + pad,
+        top: cardRect.top - pad,
+        bottom: cardRect.bottom + pad
+      }]
+    : [];
 
-    wrapper.className = `diamond-sparkle ${colorClass}`;
-    wrapper.style.width = `${size}px`;
-    wrapper.style.height = `${size}px`;
-    wrapper.style.top = `${top}%`;
-    wrapper.style.left = `${left}%`;
-    wrapper.style.setProperty('--duration', `${duration}s`);
-    wrapper.style.setProperty('--delay', `${delay}s`);
-
-    wrapper.innerHTML = `
-      <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full">
-        <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4L12 0Z" />
-      </svg>
-    `;
-
-    sparkleField.appendChild(wrapper);
-  }
+  scatterAmbientSparkles({
+    container: sparkleField,
+    targetCount: isMobile ? 14 : isTablet ? 20 : 28,
+    minDist: isMobile ? 54 : isTablet ? 64 : 74,
+    exclusionZones,
+    edgeMarginPct: 6,
+    sizeScale: isMobile ? 0.85 : 1.0
+  });
 }
 
 spawnDiamondSparkles();
+window.addEventListener('resize', () => {
+  if (currentPage === 1) spawnDiamondSparkles();
+});
 
 document.addEventListener('mousemove', (e) => {
   if (currentPage !== 1 || !heroCard || heroCard.classList.contains('hidden')) return;
@@ -264,6 +362,10 @@ if (btnPage1Next) {
     if (page1Clicked) return;
     page1Clicked = true;
 
+    if (sparkleField) {
+      sparkleField.classList.add('hidden');
+    }
+
     navigateToPage(1, 2, () => {
       initMemoryGame();
     });
@@ -271,7 +373,7 @@ if (btnPage1Next) {
 }
 
 // ============================================================================
-// PAGE 2: MEMORY MATCHING GAME
+// PAGE 2: MEMORY MATCHING GAME (CHROME & BRAVE CONSISTENT PROPORTIONS)
 // ============================================================================
 const cardGrid = document.getElementById('card-grid');
 const matchCounter = document.getElementById('match-counter');
@@ -313,19 +415,19 @@ function renderMemoryCardsDOM() {
 
   gameCards.forEach((card, index) => {
     const cardContainer = document.createElement('div');
-    cardContainer.className = 'card-container relative w-22 h-32 sm:w-28 sm:h-40 cursor-pointer select-none mx-auto';
+    cardContainer.className = 'card-container';
 
     cardContainer.innerHTML = `
       <div class="card-inner" id="card-inner-${index}">
-        <div class="card-back bg-gradient-to-br from-[#3d0d26] via-[#260717] to-[#14030c] border border-pink-400/40 rounded-2xl shadow-[0_6px_18px_rgba(0,0,0,0.5)] flex items-center justify-center p-2 sm:p-2.5">
-          <div class="w-full h-full rounded-xl border border-amber-200/25 flex items-center justify-center bg-[#1f0613]/60">
-            <span class="font-['Bangers'] text-lg sm:text-2xl tracking-widest text-transparent bg-clip-text bg-gradient-to-b from-white via-pink-200 to-amber-200 select-none">
+        <div class="card-back bg-gradient-to-br from-[#3d0d26] via-[#260717] to-[#14030c] border border-pink-400/45 rounded-2xl shadow-[0_6px_18px_rgba(0,0,0,0.5)] p-2 sm:p-2.5">
+          <div class="w-full h-full rounded-xl border border-amber-200/30 flex items-center justify-center bg-[#1f0613]/65">
+            <span class="font-['Bangers'] text-base sm:text-2xl tracking-widest text-transparent bg-clip-text bg-gradient-to-b from-white via-pink-200 to-amber-200 select-none">
               UNCLE
             </span>
           </div>
         </div>
 
-        <div class="card-front bg-gradient-to-br from-[#4a102f] via-[#2b081b] to-[#14030c] border-2 border-amber-200/60 rounded-2xl shadow-[0_0_20px_rgba(244,114,182,0.3)] flex items-center justify-center text-4xl sm:text-5xl">
+        <div class="card-front bg-gradient-to-br from-[#4a102f] via-[#2b081b] to-[#14030c] border-2 border-amber-200/65 rounded-2xl shadow-[0_0_20px_rgba(244,114,182,0.3)] text-3xl sm:text-5xl">
           ${card.icon}
         </div>
       </div>
@@ -673,7 +775,7 @@ if (btnPage3Next) {
 }
 
 // ============================================================================
-// PAGE 4: INTERACTIVE BIRTHDAY CAKE & DECORATED BACKGROUND
+// PAGE 4: INTERACTIVE BIRTHDAY CAKE & REFINED PERIMETER SPARKLES
 // ============================================================================
 const page4Section = document.getElementById('page-4');
 const page4ContinueWrapper = document.getElementById('page4-continue-wrapper');
@@ -685,42 +787,27 @@ let finalCakeStormFinished = false;
 
 function initPage4Decorations() {
   if (!page4DecorStage) return;
-  page4DecorStage.innerHTML = '';
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  const isMobile = vw < 640;
+  const isTablet = vw >= 640 && vw < 1024;
 
-  const decorCount = 32;
-  for (let i = 0; i < decorCount; i++) {
-    const el = document.createElement('div');
-    const isSparkle = i % 3 === 0;
-    const top = Math.random() * 92 + 4;
-    const left = Math.random() * 92 + 4;
-    const size = Math.floor(Math.random() * 5) + 4;
-    const dur = (Math.random() * 3 + 2.5).toFixed(2);
-    const del = (Math.random() * 3).toFixed(2);
+  // Keep the center cake, candles, and heading clear while framing the edges gently
+  const centerZone = {
+    left: vw * (isMobile ? 0.14 : 0.28),
+    right: vw * (isMobile ? 0.86 : 0.72),
+    top: vh * 0.24,
+    bottom: vh * 0.76
+  };
 
-    el.className = 'absolute pointer-events-none cinematic-particle-float';
-    el.style.top = `${top}%`;
-    el.style.left = `${left}%`;
-    el.style.width = `${size}px`;
-    el.style.height = `${size}px`;
-    el.style.animationDuration = `${dur}s`;
-    el.style.animationDelay = `${del}s`;
-
-    if (isSparkle) {
-      el.className += ' text-pink-200/75';
-      el.innerHTML = `
-        <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full">
-          <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4L12 0Z" />
-        </svg>
-      `;
-    } else {
-      el.style.borderRadius = '50%';
-      el.style.backgroundColor = i % 2 === 0 ? '#fbcfe8' : '#fde68a';
-      el.style.boxShadow = i % 2 === 0 ? '0 0 8px rgba(244,114,182,0.65)' : '0 0 8px rgba(251,191,36,0.6)';
-      el.style.opacity = '0.65';
-    }
-
-    page4DecorStage.appendChild(el);
-  }
+  scatterAmbientSparkles({
+    container: page4DecorStage,
+    targetCount: isMobile ? 16 : isTablet ? 22 : 28,
+    minDist: isMobile ? 52 : 66,
+    exclusionZones: [centerZone],
+    edgeMarginPct: 5,
+    sizeScale: isMobile ? 0.8 : 0.92
+  });
 }
 
 function initPage4Cake() {
@@ -740,6 +827,10 @@ function initPage4Cake() {
 
   initPage4Decorations();
 }
+
+window.addEventListener('resize', () => {
+  if (currentPage === 4) initPage4Decorations();
+});
 
 document.querySelectorAll('#page-4 .candle-unit').forEach((unit) => {
   unit.addEventListener('click', (e) => {
@@ -835,49 +926,54 @@ if (btnPage5Next) {
 }
 
 // ============================================================================
-// PAGE 6: SHOOTING STAR – MAKE A WISH (CINEMATIC METEOR & GALAXY ENGINE)
+// PAGE 6: SHOOTING STAR – MAKE A WISH (STRICTLY EXCLUDED / UNCHANGED)
 // ============================================================================
-const SHOOTING_STAR_WISHES = [
+const CHOREOGRAPHED_WISH_SEQUENCES = [
   {
-    text: 'May happiness find you in the simplest moments.',
-    start: { x: 0.08, y: 0.16 },
-    ctrl: { x: 0.45, y: 0.32 },
-    end: { x: 0.78, y: 0.56 },
-    wishPos: { x: 0.64, y: 0.52 },
-    duration: 1650,
+    text: 'A lifetime of happiness and peace.',
+    desktop: { start: { x: 0.08, y: 0.16 }, ctrl: { x: 0.44, y: 0.30 }, end: { x: 0.78, y: 0.56 }, wishPos: { x: 0.64, y: 0.50 } },
+    mobile:  { start: { x: 0.06, y: 0.22 }, ctrl: { x: 0.46, y: 0.34 }, end: { x: 0.88, y: 0.52 }, wishPos: { x: 0.50, y: 0.52 } },
+    duration: 1550,
     scale: 1.0
   },
   {
-    text: 'May your dreams take you further than you imagined.',
-    start: { x: 0.92, y: 0.18 },
-    ctrl: { x: 0.56, y: 0.34 },
-    end: { x: 0.22, y: 0.54 },
-    wishPos: { x: 0.36, y: 0.48 },
-    duration: 1700,
-    scale: 1.05
+    text: 'Dreams beyond the horizon.',
+    desktop: { start: { x: 0.92, y: 0.18 }, ctrl: { x: 0.56, y: 0.34 }, end: { x: 0.22, y: 0.54 }, wishPos: { x: 0.36, y: 0.48 } },
+    mobile:  { start: { x: 0.94, y: 0.24 }, ctrl: { x: 0.52, y: 0.36 }, end: { x: 0.12, y: 0.54 }, wishPos: { x: 0.50, y: 0.50 } },
+    duration: 1600,
+    scale: 1.06
   },
   {
-    text: 'May success follow every step you take.',
-    start: { x: 0.12, y: 0.64 },
-    ctrl: { x: 0.48, y: 0.44 },
-    end: { x: 0.82, y: 0.28 },
-    wishPos: { x: 0.66, y: 0.36 },
+    text: 'Success in every step.',
+    desktop: { start: { x: 0.12, y: 0.64 }, ctrl: { x: 0.48, y: 0.44 }, end: { x: 0.82, y: 0.28 }, wishPos: { x: 0.66, y: 0.36 } },
+    mobile:  { start: { x: 0.08, y: 0.64 }, ctrl: { x: 0.48, y: 0.48 }, end: { x: 0.90, y: 0.34 }, wishPos: { x: 0.50, y: 0.44 } },
+    duration: 1650,
+    scale: 1.1
+  },
+  {
+    text: 'Endless reasons to smile.',
+    desktop: { start: { x: 0.86, y: 0.12 }, ctrl: { x: 0.58, y: 0.40 }, end: { x: 0.36, y: 0.72 }, wishPos: { x: 0.50, y: 0.62 } },
+    mobile:  { start: { x: 0.90, y: 0.18 }, ctrl: { x: 0.56, y: 0.44 }, end: { x: 0.18, y: 0.68 }, wishPos: { x: 0.50, y: 0.58 } },
     duration: 1750,
-    scale: 1.08
-  },
-  {
-    text: 'May life surprise you with beautiful moments.',
-    start: { x: 0.86, y: 0.12 },
-    ctrl: { x: 0.58, y: 0.42 },
-    end: { x: 0.36, y: 0.72 },
-    wishPos: { x: 0.50, y: 0.62 },
-    duration: 1900,
-    scale: 1.25
+    scale: 1.24
   }
 ];
 
+const FINALE_METEOR_PATHS = [
+  { delay: 0,    start: { x: 0.10, y: 0.12 }, ctrl: { x: 0.42, y: 0.28 }, end: { x: 0.76, y: 0.50 }, duration: 1250, scale: 0.85 },
+  { delay: 220,  start: { x: 0.88, y: 0.14 }, ctrl: { x: 0.56, y: 0.32 }, end: { x: 0.24, y: 0.52 }, duration: 1300, scale: 0.80 },
+  { delay: 440,  start: { x: 0.25, y: 0.08 }, ctrl: { x: 0.54, y: 0.30 }, end: { x: 0.85, y: 0.58 }, duration: 1200, scale: 0.75 },
+  { delay: 680,  start: { x: 0.74, y: 0.08 }, ctrl: { x: 0.44, y: 0.32 }, end: { x: 0.14, y: 0.58 }, duration: 1280, scale: 0.78 },
+  { delay: 920,  start: { x: 0.06, y: 0.30 }, ctrl: { x: 0.46, y: 0.44 }, end: { x: 0.86, y: 0.68 }, duration: 1350, scale: 0.90 },
+  { delay: 1160, start: { x: 0.94, y: 0.28 }, ctrl: { x: 0.54, y: 0.44 }, end: { x: 0.16, y: 0.68 }, duration: 1320, scale: 0.88 },
+  { delay: 1420, start: { x: 0.36, y: 0.06 }, ctrl: { x: 0.58, y: 0.34 }, end: { x: 0.80, y: 0.66 }, duration: 1180, scale: 0.70 },
+  { delay: 1680, start: { x: 0.64, y: 0.06 }, ctrl: { x: 0.42, y: 0.34 }, end: { x: 0.20, y: 0.66 }, duration: 1220, scale: 0.72 },
+  { delay: 1960, start: { x: 0.14, y: 0.18 }, ctrl: { x: 0.50, y: 0.38 }, end: { x: 0.88, y: 0.62 }, duration: 1400, scale: 0.95 },
+  { delay: 2240, start: { x: 0.86, y: 0.16 }, ctrl: { x: 0.50, y: 0.38 }, end: { x: 0.12, y: 0.64 }, duration: 1450, scale: 0.95 }
+];
+
 const shootingStarCanvas = document.getElementById('shooting-star-canvas');
-const shootingStarCtx = shootingStarCanvas ? shootingStarCanvas.getContext('2d') : null;
+const shootingStarCtx = shootingStarCanvas ? shootingStarCanvas.getContext('2d', { alpha: true }) : null;
 const shootingStarOpening = document.getElementById('shooting-star-opening');
 const skyWishAnchor = document.getElementById('sky-wish-anchor');
 const skyWishText = document.getElementById('sky-wish-text');
@@ -888,18 +984,25 @@ const btnPage6Next = document.getElementById('btn-page6-next');
 let ssAnimId = null;
 let ssTimers = [];
 let ssStarfield = [];
-let ssNebulaClouds = [];
+let ssAtmosphericDust = [];
+let ssNebulaSprites = [];
 let ssActiveMeteors = [];
 let ssSparks = [];
 let ssAmbientGlow = 0;
 let ssCameraTime = 0;
+let ssLastFrameTime = 0;
 let isPage6Running = false;
+
+function isMobileViewport() {
+  return window.innerWidth < 768;
+}
 
 function resizeShootingStarCanvas() {
   if (!shootingStarCanvas) return;
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
-  shootingStarCanvas.width = window.innerWidth * dpr;
-  shootingStarCanvas.height = window.innerHeight * dpr;
+  const maxDpr = isMobileViewport() ? 1.5 : 2;
+  const dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
+  shootingStarCanvas.width = Math.floor(window.innerWidth * dpr);
+  shootingStarCanvas.height = Math.floor(window.innerHeight * dpr);
   if (shootingStarCtx) {
     shootingStarCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
@@ -911,19 +1014,43 @@ window.addEventListener('resize', () => {
   }
 });
 
+function createNebulaSprite(radius, colorStr) {
+  const off = document.createElement('canvas');
+  const size = Math.ceil(radius * 2);
+  off.width = size;
+  off.height = size;
+  const octx = off.getContext('2d');
+  if (octx) {
+    const grad = octx.createRadialGradient(radius, radius, 0, radius, radius, radius);
+    grad.addColorStop(0, colorStr);
+    grad.addColorStop(1, 'rgba(4, 1, 10, 0)');
+    octx.fillStyle = grad;
+    octx.fillRect(0, 0, size, size);
+  }
+  return off;
+}
+
 function buildGalaxySceneLayers() {
   const w = window.innerWidth;
   const h = window.innerHeight;
+  const mobile = isMobileViewport();
   ssStarfield = [];
-  ssNebulaClouds = [];
+  ssAtmosphericDust = [];
+  ssNebulaSprites = [];
 
-  const layerConfigs = [
-    { count: 90, speed: 0.03, minR: 0.6, maxR: 1.2, maxAlpha: 0.65 },
-    { count: 50, speed: 0.07, minR: 1.0, maxR: 1.8, maxAlpha: 0.88 },
-    { count: 22, speed: 0.13, minR: 1.5, maxR: 2.5, maxAlpha: 1.0 }
-  ];
+  const layerConfigs = mobile
+    ? [
+        { count: 105, speed: 0.03, minR: 0.6, maxR: 1.2, maxAlpha: 0.72 },
+        { count: 60,  speed: 0.07, minR: 1.0, maxR: 1.8, maxAlpha: 0.92 },
+        { count: 25,  speed: 0.13, minR: 1.5, maxR: 2.5, maxAlpha: 1.0 }
+      ]
+    : [
+        { count: 180, speed: 0.03, minR: 0.6, maxR: 1.2, maxAlpha: 0.72 },
+        { count: 95,  speed: 0.07, minR: 1.0, maxR: 1.8, maxAlpha: 0.92 },
+        { count: 40,  speed: 0.13, minR: 1.5, maxR: 2.6, maxAlpha: 1.0 }
+      ];
 
-  const starTints = ['#ffffff', '#fef3c7', '#fbcfe8', '#ddd6fe', '#bae6fd'];
+  const starTints = ['#ffffff', '#fef3c7', '#fbcfe8', '#ddd6fe', '#bae6fd', '#fde68a'];
 
   layerConfigs.forEach((cfg) => {
     for (let i = 0; i < cfg.count; i++) {
@@ -931,36 +1058,50 @@ function buildGalaxySceneLayers() {
         x: Math.random() * w,
         y: Math.random() * h,
         r: cfg.minR + Math.random() * (cfg.maxR - cfg.minR),
-        baseAlpha: 0.3 + Math.random() * (cfg.maxAlpha - 0.3),
+        baseAlpha: 0.35 + Math.random() * (cfg.maxAlpha - 0.35),
         twinklePhase: Math.random() * Math.PI * 2,
-        twinkleSpeed: 0.015 + Math.random() * 0.03,
+        twinkleSpeed: 0.018 + Math.random() * 0.028,
         driftSpeed: cfg.speed,
-        color: starTints[Math.floor(Math.random() * starTints.length)]
+        color: starTints[i % starTints.length],
+        isCrossSparkle: i % 11 === 0
       });
     }
   });
 
+  const dustCount = mobile ? 24 : 42;
+  for (let i = 0; i < dustCount; i++) {
+    ssAtmosphericDust.push({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.18,
+      vy: -0.08 - Math.random() * 0.16,
+      size: Math.random() * 1.6 + 0.8,
+      phase: Math.random() * Math.PI * 2,
+      isGold: i % 2 === 0
+    });
+  }
+
+  const baseRadius = Math.max(w, h) * 0.36;
   const nebulaSpecs = [
-    { rx: 0.28, ry: 0.32, radius: Math.max(w, h) * 0.38, color: 'rgba(147, 51, 234, 0.14)', vx: 0.06, vy: -0.03 },
-    { rx: 0.72, ry: 0.58, radius: Math.max(w, h) * 0.40, color: 'rgba(219, 39, 119, 0.12)', vx: -0.05, vy: 0.04 },
-    { rx: 0.50, ry: 0.25, radius: Math.max(w, h) * 0.34, color: 'rgba(59, 130, 246, 0.10)', vx: 0.04, vy: 0.02 },
-    { rx: 0.35, ry: 0.72, radius: Math.max(w, h) * 0.36, color: 'rgba(244, 114, 182, 0.11)', vx: -0.04, vy: -0.03 }
+    { rx: 0.26, ry: 0.32, radius: baseRadius,        color: 'rgba(88, 28, 135, 0.16)',  vx: 0.04,  vy: -0.02 },
+    { rx: 0.74, ry: 0.58, radius: baseRadius * 1.05, color: 'rgba(131, 24, 67, 0.12)',  vx: -0.03, vy: 0.02 },
+    { rx: 0.50, ry: 0.24, radius: baseRadius * 0.9,  color: 'rgba(49, 46, 129, 0.14)',  vx: 0.02,  vy: 0.02 }
   ];
 
   nebulaSpecs.forEach((n) => {
-    ssNebulaClouds.push({
+    ssNebulaSprites.push({
       x: w * n.rx,
       y: h * n.ry,
       radius: n.radius,
-      color: n.color,
       vx: n.vx,
-      vy: n.vy
+      vy: n.vy,
+      sprite: createNebulaSprite(n.radius, n.color)
     });
   });
 }
 
 class RealisticMeteor {
-  constructor({ start, ctrl, end, duration = 1700, scale = 1.0, onDisappear = null }) {
+  constructor({ start, ctrl, end, duration = 1600, scale = 1.0, onDisappear = null }) {
     this.start = start;
     this.ctrl = ctrl;
     this.end = end;
@@ -970,7 +1111,7 @@ class RealisticMeteor {
 
     this.startTime = performance.now();
     this.history = [];
-    this.maxHistory = Math.round(30 * Math.max(0.75, scale));
+    this.maxHistory = Math.round((isMobileViewport() ? 22 : 30) * Math.max(0.75, scale));
     this.finished = false;
     this.hasTriggeredCallback = false;
   }
@@ -985,23 +1126,21 @@ class RealisticMeteor {
   }
 
   easeTrajectory(t) {
-    return t < 0.5
-      ? 2 * t * t
-      : 1 - Math.pow(-2 * t + 2, 2) / 2;
+    return 1 - Math.pow(1 - t, 1.65);
   }
 
-  update(now) {
+  update(now, dtScale) {
     const rawT = (now - this.startTime) / this.duration;
     const clampedT = Math.min(1, Math.max(0, rawT));
     const easedT = this.easeTrajectory(clampedT);
 
     let brightness = 1;
-    if (clampedT < 0.14) {
-      brightness = clampedT / 0.14;
-    } else if (clampedT > 0.72) {
-      brightness = Math.max(0, 1 - (clampedT - 0.72) / 0.28);
+    if (clampedT < 0.12) {
+      brightness = clampedT / 0.12;
+    } else if (clampedT > 0.68) {
+      brightness = Math.max(0, 1 - (clampedT - 0.68) / 0.32);
     }
-    brightness *= 0.92 + Math.sin(now * 0.045) * 0.08;
+    brightness *= 0.93 + Math.sin(now * 0.045) * 0.07;
 
     if (clampedT <= 1) {
       const pos = this.getQuadraticPoint(easedT);
@@ -1010,28 +1149,28 @@ class RealisticMeteor {
         this.history.pop();
       }
 
-      if (brightness > 0.15 && this.history.length > 2) {
+      if (brightness > 0.12 && this.history.length > 1) {
         const prev = this.history[1];
-        const vx = (pos.x - prev.x) * 0.18;
-        const vy = (pos.y - prev.y) * 0.18;
-        const sparkCount = this.scale >= 1 ? 2 : 1;
+        const vx = (pos.x - prev.x) * 0.16;
+        const vy = (pos.y - prev.y) * 0.16;
+        const maxSparks = isMobileViewport() ? 140 : 240;
 
-        for (let i = 0; i < sparkCount; i++) {
+        if (ssSparks.length < maxSparks) {
           ssSparks.push({
-            x: pos.x + (Math.random() - 0.5) * 5 * this.scale,
-            y: pos.y + (Math.random() - 0.5) * 5 * this.scale,
-            vx: vx + (Math.random() - 0.5) * 1.15,
-            vy: vy + (Math.random() - 0.5) * 1.15 + 0.15,
-            size: (Math.random() * 1.6 + 0.8) * Math.min(1.2, this.scale),
-            alpha: brightness * (0.65 + Math.random() * 0.35),
-            decay: 0.016 + Math.random() * 0.018,
-            isGold: Math.random() > 0.38
+            x: pos.x + (Math.random() - 0.5) * 4 * this.scale,
+            y: pos.y + (Math.random() - 0.5) * 4 * this.scale,
+            vx: vx + (Math.random() - 0.5) * 1.0,
+            vy: vy + (Math.random() - 0.5) * 1.0 + 0.12,
+            size: (Math.random() * 1.5 + 0.8) * Math.min(1.2, this.scale),
+            alpha: brightness * (0.72 + Math.random() * 0.28),
+            decay: 0.017 + Math.random() * 0.014,
+            isGold: Math.random() > 0.35
           });
         }
       }
     }
 
-    if (clampedT >= 0.86 && !this.hasTriggeredCallback) {
+    if (clampedT >= 0.70 && !this.hasTriggeredCallback) {
       this.hasTriggeredCallback = true;
       if (typeof this.onDisappear === 'function') {
         this.onDisappear();
@@ -1039,7 +1178,10 @@ class RealisticMeteor {
     }
 
     if (clampedT >= 1) {
-      this.history.pop();
+      const drainSteps = Math.max(1, Math.round(dtScale));
+      for (let s = 0; s < drainSteps; s++) {
+        this.history.pop();
+      }
       if (this.history.length === 0) {
         this.finished = true;
       }
@@ -1056,11 +1198,11 @@ class RealisticMeteor {
       const curr = this.history[i];
       const next = this.history[i + 1];
       const ratio = 1 - i / this.history.length;
-      const alpha = Math.pow(ratio, 1.65) * curr.brightness;
+      const alpha = Math.pow(ratio, 1.55) * curr.brightness;
       if (alpha <= 0.01) continue;
 
       let r, g, b;
-      if (ratio > 0.75) {
+      if (ratio > 0.74) {
         r = 255;
         g = 250;
         b = 230;
@@ -1078,26 +1220,26 @@ class RealisticMeteor {
       ctx.moveTo(curr.x, curr.y);
       ctx.lineTo(next.x, next.y);
       ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha * 0.34})`;
-      ctx.lineWidth = Math.max(0.8, ratio * 10.0 * this.scale);
+      ctx.lineWidth = Math.max(0.8, ratio * 9.5 * this.scale);
       ctx.lineCap = 'round';
       ctx.stroke();
 
       ctx.beginPath();
       ctx.moveTo(curr.x, curr.y);
       ctx.lineTo(next.x, next.y);
-      ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha * 0.92})`;
-      ctx.lineWidth = Math.max(0.5, ratio * 3.4 * this.scale);
+      ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha * 0.94})`;
+      ctx.lineWidth = Math.max(0.5, ratio * 3.2 * this.scale);
       ctx.lineCap = 'round';
       ctx.stroke();
     }
 
     const head = this.history[0];
     if (head && head.brightness > 0.03) {
-      const glowRadius = 24 * this.scale;
+      const glowRadius = 22 * this.scale;
       const radGrad = ctx.createRadialGradient(head.x, head.y, 0, head.x, head.y, glowRadius);
       radGrad.addColorStop(0, `rgba(255, 255, 255, ${head.brightness})`);
-      radGrad.addColorStop(0.22, `rgba(254, 243, 199, ${head.brightness * 0.85})`);
-      radGrad.addColorStop(0.55, `rgba(244, 114, 182, ${head.brightness * 0.35})`);
+      radGrad.addColorStop(0.24, `rgba(254, 243, 199, ${head.brightness * 0.85})`);
+      radGrad.addColorStop(0.56, `rgba(244, 114, 182, ${head.brightness * 0.35})`);
       radGrad.addColorStop(1, 'rgba(244, 114, 182, 0)');
 
       ctx.fillStyle = radGrad;
@@ -1107,7 +1249,7 @@ class RealisticMeteor {
 
       ctx.fillStyle = `rgba(255, 255, 255, ${head.brightness})`;
       ctx.beginPath();
-      ctx.arc(head.x, head.y, 2.8 * this.scale, 0, Math.PI * 2);
+      ctx.arc(head.x, head.y, 2.6 * this.scale, 0, Math.PI * 2);
       ctx.fill();
     }
 
@@ -1121,74 +1263,106 @@ function renderShootingStarLoop(now) {
     return;
   }
 
+  const dt = ssLastFrameTime ? Math.min(50, now - ssLastFrameTime) : 16.67;
+  const dtScale = dt / 16.67;
+  ssLastFrameTime = now;
+
   const w = window.innerWidth;
   const h = window.innerHeight;
-  ssCameraTime += 0.008;
+  ssCameraTime += 0.008 * dtScale;
 
   shootingStarCtx.clearRect(0, 0, w, h);
 
-  // 1. Drifting Nebula Clouds
-  ssNebulaClouds.forEach((cloud) => {
-    cloud.x += cloud.vx;
-    cloud.y += cloud.vy;
+  ssNebulaSprites.forEach((cloud) => {
+    cloud.x += cloud.vx * dtScale;
+    cloud.y += cloud.vy * dtScale;
     if (cloud.x < -cloud.radius * 0.4) cloud.x = w + cloud.radius * 0.3;
     if (cloud.x > w + cloud.radius * 0.4) cloud.x = -cloud.radius * 0.3;
     if (cloud.y < -cloud.radius * 0.4) cloud.y = h + cloud.radius * 0.3;
     if (cloud.y > h + cloud.radius * 0.4) cloud.y = -cloud.radius * 0.3;
 
-    const grad = shootingStarCtx.createRadialGradient(cloud.x, cloud.y, 0, cloud.x, cloud.y, cloud.radius);
-    grad.addColorStop(0, cloud.color);
-    grad.addColorStop(1, 'rgba(6, 2, 13, 0)');
-    shootingStarCtx.fillStyle = grad;
-    shootingStarCtx.beginPath();
-    shootingStarCtx.arc(cloud.x, cloud.y, cloud.radius, 0, Math.PI * 2);
-    shootingStarCtx.fill();
+    shootingStarCtx.drawImage(
+      cloud.sprite,
+      cloud.x - cloud.radius,
+      cloud.y - cloud.radius
+    );
   });
 
-  // Brief warm golden-pink cosmic illumination during meteor shower
   if (ssAmbientGlow > 0.002) {
     const finaleGrad = shootingStarCtx.createRadialGradient(w * 0.5, h * 0.42, 0, w * 0.5, h * 0.42, Math.max(w, h) * 0.65);
-    finaleGrad.addColorStop(0, `rgba(253, 230, 138, ${ssAmbientGlow * 0.16})`);
-    finaleGrad.addColorStop(0.5, `rgba(244, 114, 182, ${ssAmbientGlow * 0.12})`);
-    finaleGrad.addColorStop(1, 'rgba(6, 2, 13, 0)');
+    finaleGrad.addColorStop(0, `rgba(253, 230, 138, ${ssAmbientGlow * 0.14})`);
+    finaleGrad.addColorStop(0.5, `rgba(219, 39, 119, ${ssAmbientGlow * 0.10})`);
+    finaleGrad.addColorStop(1, 'rgba(4, 1, 10, 0)');
     shootingStarCtx.fillStyle = finaleGrad;
     shootingStarCtx.fillRect(0, 0, w, h);
-    ssAmbientGlow *= 0.992;
+    ssAmbientGlow *= Math.pow(0.992, dtScale);
   }
 
-  // 2. Parallax Distant Stars
-  const camOffsetX = Math.sin(ssCameraTime) * 6;
-  const camOffsetY = Math.cos(ssCameraTime * 0.7) * 4;
+  const camOffsetX = Math.sin(ssCameraTime) * 5;
+  const camOffsetY = Math.cos(ssCameraTime * 0.7) * 3.5;
 
   ssStarfield.forEach((star) => {
-    star.twinklePhase += star.twinkleSpeed;
-    star.x -= star.driftSpeed;
+    star.twinklePhase += star.twinkleSpeed * dtScale;
+    star.x -= star.driftSpeed * dtScale;
     if (star.x < 0) star.x += w;
 
-    const alpha = star.baseAlpha * (0.65 + 0.35 * Math.sin(star.twinklePhase));
+    const pulse = 0.6 + 0.4 * Math.sin(star.twinklePhase);
+    const alpha = star.baseAlpha * pulse;
     const drawX = star.x + camOffsetX * (star.driftSpeed * 8);
     const drawY = star.y + camOffsetY * (star.driftSpeed * 8);
 
     shootingStarCtx.save();
-    shootingStarCtx.globalAlpha = Math.max(0.1, Math.min(1, alpha));
+    shootingStarCtx.globalAlpha = Math.max(0.15, Math.min(1, alpha));
     shootingStarCtx.fillStyle = star.color;
     shootingStarCtx.beginPath();
     shootingStarCtx.arc(drawX, drawY, star.r, 0, Math.PI * 2);
     shootingStarCtx.fill();
+
+    if (star.isCrossSparkle && pulse > 0.82) {
+      const ray = star.r * 3.2;
+      shootingStarCtx.strokeStyle = star.color;
+      shootingStarCtx.lineWidth = 0.7;
+      shootingStarCtx.beginPath();
+      shootingStarCtx.moveTo(drawX - ray, drawY);
+      shootingStarCtx.lineTo(drawX + ray, drawY);
+      shootingStarCtx.moveTo(drawX, drawY - ray);
+      shootingStarCtx.lineTo(drawX, drawY + ray);
+      shootingStarCtx.stroke();
+    }
+
     shootingStarCtx.restore();
   });
 
-  // 3. Detaching Glowing Ember Sparks
+  ssAtmosphericDust.forEach((mote) => {
+    mote.x += mote.vx * dtScale;
+    mote.y += mote.vy * dtScale;
+    mote.phase += 0.03 * dtScale;
+    if (mote.y < 0) mote.y = h;
+    if (mote.x < 0) mote.x = w;
+    if (mote.x > w) mote.x = 0;
+
+    const alpha = 0.25 + 0.45 * Math.sin(mote.phase);
+    if (alpha <= 0.05) return;
+
+    shootingStarCtx.save();
+    shootingStarCtx.globalAlpha = alpha;
+    shootingStarCtx.fillStyle = mote.isGold ? '#fde68a' : '#fbcfe8';
+    shootingStarCtx.beginPath();
+    shootingStarCtx.arc(mote.x, mote.y, mote.size, 0, Math.PI * 2);
+    shootingStarCtx.fill();
+    shootingStarCtx.restore();
+  });
+
   shootingStarCtx.save();
   shootingStarCtx.globalCompositeOperation = 'lighter';
   for (let i = ssSparks.length - 1; i >= 0; i--) {
     const sp = ssSparks[i];
-    sp.x += sp.vx;
-    sp.y += sp.vy;
-    sp.vx *= 0.97;
-    sp.vy *= 0.97;
-    sp.alpha -= sp.decay;
-    sp.size *= 0.992;
+    sp.x += sp.vx * dtScale;
+    sp.y += sp.vy * dtScale;
+    sp.vx *= Math.pow(0.97, dtScale);
+    sp.vy *= Math.pow(0.97, dtScale);
+    sp.alpha -= sp.decay * dtScale;
+    sp.size *= Math.pow(0.992, dtScale);
 
     if (sp.alpha <= 0.01) {
       ssSparks.splice(i, 1);
@@ -1203,10 +1377,9 @@ function renderShootingStarLoop(now) {
   }
   shootingStarCtx.restore();
 
-  // 4. Active Shooting Stars
   for (let i = ssActiveMeteors.length - 1; i >= 0; i--) {
     const meteor = ssActiveMeteors[i];
-    meteor.update(now);
+    meteor.update(now, dtScale);
     meteor.draw(shootingStarCtx);
     if (meteor.finished) {
       ssActiveMeteors.splice(i, 1);
@@ -1219,9 +1392,9 @@ function renderShootingStarLoop(now) {
 function showSkyWishAt(text, normX, normY) {
   if (!skyWishAnchor || !skyWishText) return;
 
-  const isMobile = window.innerWidth < 640;
-  const safeX = Math.max(isMobile ? 0.48 : 0.28, Math.min(isMobile ? 0.52 : 0.72, normX));
-  const safeY = Math.max(0.34, Math.min(0.76, normY));
+  const mobile = isMobileViewport();
+  const safeX = Math.max(mobile ? 0.48 : 0.28, Math.min(mobile ? 0.52 : 0.72, normX));
+  const safeY = Math.max(0.36, Math.min(0.75, normY));
 
   skyWishAnchor.style.left = `${safeX * 100}%`;
   skyWishAnchor.style.top = `${safeY * 100}%`;
@@ -1245,31 +1418,32 @@ function clearShootingStarTimers() {
 function launchSingleWishSequence(wishIndex) {
   if (!isPage6Running) return;
 
-  if (wishIndex >= SHOOTING_STAR_WISHES.length) {
+  if (wishIndex >= CHOREOGRAPHED_WISH_SEQUENCES.length) {
     triggerGrandMeteorShower();
     return;
   }
 
-  const spec = SHOOTING_STAR_WISHES[wishIndex];
+  const item = CHOREOGRAPHED_WISH_SEQUENCES[wishIndex];
+  const layout = isMobileViewport() ? item.mobile : item.desktop;
 
   ssActiveMeteors.push(
     new RealisticMeteor({
-      start: spec.start,
-      ctrl: spec.ctrl,
-      end: spec.end,
-      duration: spec.duration,
-      scale: spec.scale,
+      start: layout.start,
+      ctrl: layout.ctrl,
+      end: layout.end,
+      duration: item.duration,
+      scale: item.scale,
       onDisappear: () => {
-        showSkyWishAt(spec.text, spec.wishPos.x, spec.wishPos.y);
+        showSkyWishAt(item.text, layout.wishPos.x, layout.wishPos.y);
 
         const dissolveTimer = setTimeout(() => {
           dissolveSkyWish();
 
           const nextTimer = setTimeout(() => {
             launchSingleWishSequence(wishIndex + 1);
-          }, 1100);
+          }, 500);
           ssTimers.push(nextTimer);
-        }, 2500);
+        }, 2350);
         ssTimers.push(dissolveTimer);
       }
     })
@@ -1285,29 +1459,21 @@ function triggerGrandMeteorShower() {
 
   ssAmbientGlow = 1.0;
 
-  const showerCount = 22;
-  for (let i = 0; i < showerCount; i++) {
-    const delay = i * 165 + Math.random() * 110;
+  FINALE_METEOR_PATHS.forEach((path) => {
     const tId = setTimeout(() => {
       if (!isPage6Running) return;
-      const fromRight = i % 3 === 0;
-      const startX = fromRight ? 0.65 + Math.random() * 0.32 : 0.04 + Math.random() * 0.55;
-      const startY = 0.04 + Math.random() * 0.28;
-      const spanX = (0.28 + Math.random() * 0.25) * (fromRight ? -1 : 1);
-      const spanY = 0.32 + Math.random() * 0.28;
-
       ssActiveMeteors.push(
         new RealisticMeteor({
-          start: { x: startX, y: startY },
-          ctrl: { x: startX + spanX * 0.5, y: startY + spanY * 0.42 },
-          end: { x: startX + spanX, y: startY + spanY },
-          duration: 1100 + Math.random() * 550,
-          scale: 0.55 + Math.random() * 0.38
+          start: path.start,
+          ctrl: path.ctrl,
+          end: path.end,
+          duration: path.duration,
+          scale: path.scale
         })
       );
-    }, delay);
+    }, path.delay);
     ssTimers.push(tId);
-  }
+  });
 
   const finaleRevealTimer = setTimeout(() => {
     if (!isPage6Running) return;
@@ -1318,9 +1484,9 @@ function triggerGrandMeteorShower() {
       if (page6ContinueContainer) {
         page6ContinueContainer.classList.remove('opacity-0', 'translate-y-3');
       }
-    }, 900);
+    }, 850);
     ssTimers.push(btnTimer);
-  }, 4400);
+  }, 3600);
   ssTimers.push(finaleRevealTimer);
 }
 
@@ -1332,6 +1498,7 @@ function initPage6ShootingStars() {
   }
 
   isPage6Running = true;
+  ssLastFrameTime = 0;
   ssActiveMeteors = [];
   ssSparks = [];
   ssAmbientGlow = 0;
@@ -1359,12 +1526,12 @@ function initPage6ShootingStars() {
     if (shootingStarOpening) {
       shootingStarOpening.classList.remove('opacity-0', 'translate-y-2');
     }
-  }, 300);
+  }, 250);
   ssTimers.push(openFadeTimer);
 
   const firstMeteorTimer = setTimeout(() => {
     launchSingleWishSequence(0);
-  }, 2400);
+  }, 2100);
   ssTimers.push(firstMeteorTimer);
 }
 
@@ -1385,7 +1552,7 @@ if (btnPage6Next) {
 }
 
 // ============================================================================
-// PAGE 7: GOODBYE PAGE (5-MODE LOOPING TRANSLUCENT HEART GESTURES)
+// PAGE 7: GOODBYE PAGE (5-MODE LOOPING HEARTS & REFINED BACKGROUND SPARKLES)
 // ============================================================================
 const page7Section = document.getElementById('page-7');
 const page7HorizonGlow = document.getElementById('page7-horizon-glow');
@@ -1945,6 +2112,35 @@ if (page7Section) {
   });
 }
 
+function renderPage7Sparkles() {
+  if (!page7SparkleStage) return;
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  const isMobile = vw < 640;
+  const isTablet = vw >= 640 && vw < 1024;
+
+  // Keep central farewell message completely unobstructed
+  const centerTextZone = {
+    left: vw * (isMobile ? 0.14 : 0.28),
+    right: vw * (isMobile ? 0.86 : 0.72),
+    top: vh * 0.34,
+    bottom: vh * 0.66
+  };
+
+  scatterAmbientSparkles({
+    container: page7SparkleStage,
+    targetCount: isMobile ? 18 : isTablet ? 26 : 32,
+    minDist: isMobile ? 48 : 64,
+    exclusionZones: [centerTextZone],
+    edgeMarginPct: 5,
+    sizeScale: isMobile ? 0.78 : 0.9
+  });
+}
+
+window.addEventListener('resize', () => {
+  if (currentPage === 7) renderPage7Sparkles();
+});
+
 function initPage7Farewell() {
   page7TapCounter = 0;
   page7HeartEffects = [];
@@ -1966,34 +2162,5 @@ function initPage7Farewell() {
     if (goodbyeTapHint) goodbyeTapHint.classList.remove('opacity-0');
   }, 1900);
 
-  if (page7SparkleStage) {
-    page7SparkleStage.innerHTML = '';
-    for (let i = 0; i < 38; i++) {
-      const sp = document.createElement('div');
-      const size = Math.floor(Math.random() * 6) + 5;
-      const isDiamond = i % 2 === 0;
-
-      sp.className = 'absolute pointer-events-none cinematic-particle-float text-pink-200/80';
-      sp.style.width = `${size}px`;
-      sp.style.height = `${size}px`;
-      sp.style.top = `${Math.random() * 92 + 4}%`;
-      sp.style.left = `${Math.random() * 92 + 4}%`;
-      sp.style.animationDuration = `${(Math.random() * 3 + 2.5).toFixed(2)}s`;
-      sp.style.animationDelay = `${(Math.random() * 3).toFixed(2)}s`;
-
-      if (isDiamond) {
-        sp.innerHTML = `
-          <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full">
-            <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4L12 0Z" />
-          </svg>
-        `;
-      } else {
-        sp.style.borderRadius = '50%';
-        sp.style.backgroundColor = i % 3 === 0 ? '#fbcfe8' : '#fde68a';
-        sp.style.boxShadow = '0 0 8px rgba(244,114,182,0.65)';
-      }
-
-      page7SparkleStage.appendChild(sp);
-    }
-  }
+  renderPage7Sparkles();
 }
